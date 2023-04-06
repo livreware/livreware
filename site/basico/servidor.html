@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt">
+	<head>
+		<title>Obtendo um servidor</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="../style.css">
+		<link rel="icon" type="image/png" href="../img/icon.png">
+	</head>
+
+	<body>
+		<h1><u>Obtendo um servidor</u></h1>
+		<p>Após conseguir um <a href="dominio.html">domínio</a>, você vai precisar de um servidor para hospedar seu site. Em geral, um servidor apenas é um computador que está constantemente disponibilizando algum serviço para a internet.</p>
+		<p>Servidores podem ser extremamente úteis mesmo sem um site configurado neles. Você pode usá-los para ter seu próprio site, serviço de email, compartilhamento de arquivos e muito mais.</p>
+
+		<h2>Obtendo uma VPS</h2>
+		<p>Uma VPS, ou "Virtual private server (servidor virtual privado)", é uma forma rápida e barata de conseguir um servidor, sem precisar comprar equipamento caro. Existem várias empresas com quantidades enormes de servidores e uma ótima conexão à internet que te permitem alugar uma VPS por pouco dinheiro.</p>
+		<p>Por isso, você pode hospedar várias coisas em uma única VPS, até mesmo nas mais baratas.</p>
+		<p>Para esse guia, irei usar a Hostinger novamente, pois eles também oferecem VPSes, mas você pode usar qualquer outra empresa que desejar. <u>Seu domínio e servidor não precisam estar na mesma empresa para funcionarem</u>, você pode ter um domínio em uma empresa e um servidor em outra, e eles vão funcionar do mesmo jeito. Só estou usando a Hostinger por conveniência de ter o domínio e servidor no mesmo lugar. <a href="https://www.vultr.com/">Vultr</a> é uma boa alternativa à Hostinger.</p>
+		
+		<h2><u>Inciando um servidor</u></h2>
+		<p>Cria uma conta ou faça login na Hostinger e clique na opção que diz "VPS" na barra superior.</p>
+		<figure>
+			<a href="../img/barra.png"><img src="../img/barra.png"></a>
+		</figure>
+		<p>Selecione a opção mais barata, caso você precise de algo mais poderoso no futuro, é fácil de fazer a mudança. Comece simples e barato, avance se necessário.</p>
+		<figure>
+			<a href="../img/vps.png"><img src="../img/vps.png"></a>
+		</figure>
+		<p>Faça o pagamento e aguarde que seja confirmado, você receberá um email quando houver a confirmação. Você pode acompanhar seus pagamentos na aba "Faturas". Após confirmado, você verá uma opção de configurar seu servidor.</p>
+		<p>Para a localização, escolha a que fica mais próxima da sua audiência, porém isso não importa muito, pois mesmo que seu servidor fique no Brasil, por exemplo, alguém se conectando dos Estados Unidos não vai demorar muito para estabelecer uma conexão.</p>
+		<p>Quando perguntar sobre o sistema operacional, eu prefiro escolher "SO puro", pois assim você tem uma base simples e flexível para operar seu servidor. Eu também recomendo Debian como seu sistema operacional, por ser fácil de usar e extremamente estável. Todos os guias nesse site serão escritos com base em Debian, outros sistemas talvez funcionem um pouco diferente.</p>
+		<figure>
+			<a href="../img/nome-senha.png"><img src="../img/nome-senha.png" width=750></a>
+		</figure> 
+		<p>Para o nome e senha, escolha o que quiser, mas escolha uma senha boa. Recomendo gerar uma senha forte e armazená-la com um gerenciador de senhas como <a href="https://keepassxc.org/">KeePassXC</a>. Uma chave SSH é uma forma ainda mais segura e conveniente de acessar o seu servidor, mas essa configuração será explicada em outro artigo, por enquanto não é necessária.</p>
+		
+		<h2><u>Feito!</u></h2>
+		<p>Após concluído isso, seu servidor será automáticamente configurado e estará funcionando em pouco minutos. Nas configurações do seu servidor, você poderá ver seu endereço de IP, que será necessário para o próximo passo.</p>
+		
+		<h2><a href="dns.html">-> Próximo: Conectando seu domínio e servidor via DNS</a></h2>
+		<h2><a href="dominio.html">&lt;- Anterior: Obtendo um domínio</a></h2>
+
+		<footer>
+			<a href="https://landchad.net/basic/domain/">Adaptado de LandChad.net</a>
+			<hr>
+			<a href="../index.html">De volta ao início</a>
+		</footer>
+	</body>
+</html>

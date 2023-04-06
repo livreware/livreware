@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt">
+	<head>
+		<title>Certbot e HTTPS</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="../style.css">
+		<link rel="icon" type="image/png" href="../img/icon.png">
+	</head>
+
+	<body>
+		<h1><u>Certbot e HTTPS</u></h1>
+		<p>Agora que você tem um website, é extremamente importante habilitar conexões criptografadas via HTTPS/SSL. Você pode não ter ideia do que isso significa, mas é fácil de fazer agora que <a href="nginx.html">configuramos nosso webserver</a>.
+		<p>Certbot é um programa que automaticamente gera e configura certificados que permitem conexões criptografadas. Antigamente era complicado e caro fazer isso, mas agora é fácil, gratuito e automático.</p>
+
+		<h2><u>Porque criptografia é importante?</u></h2>
+		<ul>
+			<li>Com HTTPS, provedores de internet não podem espionar quais páginas em específico uma pessoa acessou em um site, embora eles ainda saiba que ela acessou aquele site. Por exemplo, seu provedor sabe que você se conectou a <code>livreware.org</code>, mas ele não sabe que você viu a página <code>livreware.org/certbot.html</code>.</li>
+			<li>Se no futuro você criar contas e senhas no seu site, a falta de criptografia vai transmitir essas informações sem proteção nenhuma! Deixando seu site vulnerável a vazamentos de informação sensível! Muitos programas até bloqueiam a transmissão de informação sem um canal criptografado.</li>
+			<li>Ferramentas de busca como Google favorecem páginas com criptografia mais do que páginas sem.</li>
+			<li>Você ganha um cadeado bonitinho na barra de endereço quando visitar seu site.</li>
+		</ul>
+		<figure>
+			<a href="../img/site-funcionando.png"><img src="../img/site-funcionando.png"></a>
+		</figure>
+		<p>Perceba nessa foto o símbolo do cadeado com um traço no meio. Seu navegador vai te avisar de várias formas que sua conexão não é segura, então vamos consertar isso.</p>
+
+		<h2><u>Instalação</u></h2>
+		<p>Rode o comando:</p>
+		<code><pre>
+		apt install python3-certbot-nginx
+		</pre></code>
+		<p>Isso irá instalar Certbot e seu módulo para <code>nginx</code>.</p>
+		
+		<h2><u>Rodando</u></h2>
+		<p>Firewalls podem interferir no funcionamente do Certbot, caso haja um instalado. Então você deve ou disabilitar o firewall, ou garantir que as portas 80 e 443 estão abertas.</p>
+		<code><pre>
+		ufw allow 80
+		ufw allow 443
+		</pre></code>
+		<p>Agora vamos rodar o Certbot:</p>
+		<code><pre>
+		certbot --nginx
+		</pre></code>
+		<p>Esse comando vai te pedir por um email. Isso serve para que, quando os certificados precisarem ser renovados em 3 meses, você vai receber um email sobre isso. Nós vamos confirgurar os certificados para renovar automáticamente, mas é uma boa ideia checar a primeira vez para garantir que funcionou. Você pode evitar dar seu email rodando o comando com a opção <code>--register-unsafely-without-email</code>.</p>
+		<p>Digite "Y" para concordar com os termos, e opcionalmente dê seu email para a EFF (eu recomendo não dar).</p>
+		<p>Após isso, você deverá escolher para quais domínios você quer um certificado. Pressione Enter para escolher todos.</p>	
+		<figure>
+			<a href="../img/certbot.png"><img src="../img/certbot.png" width=600></a>
+		</figure>
+		<p>Feito isso, todas as conexões para o seu site agora usarão HTTPS. Você pode testar isso indo para o seu site, que agora deverá mostar no cadeado que há uma conexão segura.</p>
+		<figure>
+			<a href="../img/site-criptografado.png"><img src="../img/site-criptografado.png"></a>
+		</figure>
+
+		<h2><u>Renovação automática</u></h2>
+		<p>Certificados do Certbot duram apenas 3 meses, para renová-los, basta rodar o comando <code>certbot --nginx renew</code> e ele renovará todos os certificados que estão perto de expirar.</p>
+		<p>Fazer isso manualmente é tedioso, então vamos automatizar esse process via um cronjob. Rode o seguinte comando:</p>
+		<code><pre>
+		crontab -e
+		</pre></code>
+		<p>Talvez apareça um meno perguntando qual editor de texto você quer usar. Caso não saiba usar <code>vim</code>, escolha <code>nano</code>, a primeira opção.
+		<p>O comando <code>crontab</code> irá abrir um arquivo que você pode editar. Uma crontab é uma lista de comandos que o computador vai realizar automaticamente em certas horas. Nós vamos usar isso para que o servidor tente renovar os certificados todos os meses, para que você não precise fazer manualmente.</p>
+		<p>Crie uma nova linha no final do documento e escreva o seguinte:</p>
+		<code><pre>
+		0 0 1 * * certbot --nginx renew
+		</pre></code>
+		<p>Salve o arquivo e feche-o para ativar o cronjob.</p>
+		<p>Você agora tem um site na internet, faça o que quiser com ele!</p>
+		<p>Conforme você adiciona conteúdo ao seu site, você também pode instalar diversas outras coisas no seu servidor. Tutoriais para vários serviços estão listados na <a href="../index.html">página principal</a>, assim como outras dicas e melhorias.</p>
+
+		<h2><a href="nginx.html">&lt;- Anterior: Configurando um webserver Nginx</a></h2>
+
+		<footer>
+			<a href="https://landchad.net/basic/certbot/">Adaptado de LandChad.net</a>
+			<hr>
+			<a href="../index.html">De volta ao início</a>
+		</footer>
+	</body>
+</html>

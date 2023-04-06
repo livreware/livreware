@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt">
+	<head>
+		<title>Configurando um webserver Nginx</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="../style.css">
+		<link rel="icon" type="image/png" href="../img/icon.png">
+	</head>
+
+	<body>
+		<h1><u>Configurando um webserver Nginx</u></h1>
+		<p>Nesse ponto, devemos ter um domínio e um servidor. O domínio deve apontar para o endereço de IP do servidor via registros DNS.</p>
+		<p>Como foi dito nos artigos anteriores, as instruções aqui serão para Debian. Outros sistemas talvez funcionem diferentemente.</p>
+
+		<h2><u>Fazendo login no servidor</u></h2>
+		<p>Primeiramente, precisamos logar na VPS para configurar o webserver. Se você estiver usando MacOS ou Linux, basta abrir um terminal. Caso estiver usando windows, você pode usar o prompt de comando, <a href="https://putty.org/">PuTTY</a>, ou Windows Subsystem for Linux. O prompt de comando é o mais simples, basta clicar na barra de pesquisa do Windows e pesquisar “prompt” para ele aparecer.</p>
+		<p>Para conectar, digite o seguinte comando no seu terminal/prompt de comando, onde <code>exemplo.org</code> é o seu domínio.</p>
+		<code><pre>
+		ssh root@<u><em>exemplo.org</em></u>
+		</pre></code>
+		<p>Esse comando vai tentar conectar ao seu servidor e vai pedir uma senha, a mesma senha que você escolheu quando você <a href="servidor.html">configurou seu servidor</a>. Caso você tenha esquecido sua senha, você pode definir uma nova senha. Clique em “Gerenciar” no servidor que você quer mudar -&gt; Acesso SSH -&gt; Senha SSH - Alterar.</p>
+		<figure>
+			<a href="../img/alterar-senha.png"><img src="../img/alterar-senha.png" width=700></a>
+		</figure>
+		<p>Caso o comando acima dê problema, talvez haja um problema nas suas <a href="dns.html">configurações de DNS</a>. Revise-as novamente. Você também pode substituir <code>exemplo.org</code> pelo IP do servidor, mas você vai precisar consertar seu DNS alguma hora.</p>
+		<h2><u>Instalando o webserver: Nginx</u></h2>
+		<p>Se o comando foi executado sem problemas, você agora está logado no seu servidor! Vamos agora executar os seguintes comandos.</p>
+		<code><pre>
+		apt update
+		apt upgrade
+		systemctl reboot
+		apt install nginx
+		</pre></code>
+		<p><code>apt</code> é o programa que instala e remove software em Debian. O primeiro comando verifica se há alguma atualização disponível para o seu sistema. O segundo, aplica as atualizações caso existam. O terceiro reinicia o servidor para terminar as atualizações, ele voltará online rápidamente. Na maioria dos casos, não é necessário reiniciar o servidor para finalizar as atualizações, mas é bom fazê-lo quando vários programas são atualizados de uma vez, com o tempo, você vai aprender quando deve ou não reiniciar depois de uma atualização. O quarto comando instala nosso webserver, Nginx (pronunciado Engine-X).</p>
+		<p>Seu servidor talvez já tenha outro webserver habilitado, provávelmente Apache, como é o caso da Hostinger. Nós não o utilizaremos, então podemos desabilitá-lo e opcionalmente desinstalá-lo. É necessário desabilitá-lo pois não podem haver dois webservers rodando ao mesmo tempo.</p>
+		<code><pre>
+		systemctl stop apache2
+		systemctl disable apache2
+		apt remove apache2 apache2-bin apache2-data apache2-doc apache2-utils
+		</pre></code>
+		<p>O primeiro e segundo comandos o desabilita, o terceiro desinstala.</p>
+		<h3>Arquivo de configuração Nginx</u></h3>
+		<p>Nginx é nosso webserver, ele é o programa que vai pegar seu site e disponibilizá-lo na internet. Você só precisa fazer um pequeno site ou página e dizer ao Nginx onde os arquivos do seu site estão. Isso é simples, então vamos fazer agora.</p>
+		<p>Os arquivos de configuração do <code>nginx</code> estão localizados na pasta (também chamada de “diretório”) <code>/etc/nginx</code>. Dentro dela, as duas pastas principais (em Debian e sistemas semelhantes) são <code>/etc/nginx/sites-available</code> e <code>/etc/nginx/sites-enabled</code>. A ideia é que você pode criar um arquivo de configuração em <code>sites-available</code> e, após ele estar pronto, você pode criar um atalho/link em <code>sites-enabled</code>, para habilitá-lo. Dessa forma, você pode ter sites configurados e pode habilitá-los e desabilitá-los sem precisar apagar o arquivo de configuração.</p>
+		<p>Primeiro, vamos escrever as configurações do nosso site. Você pode copiar e colar os comandos a seguir (com as devidas modificações), mas eu vou explicar o que cada linha significa.</p>
+		<p>Crie um arquivo em <code>/etc/nginx/sites-available</code> assim:</p>
+		<code><pre>
+		nano /etc/nginx/sites-available/<u><em>meusite</em></u>
+		</pre></code>
+		<p><code>nano</code> é um programa chamado de editor de texto, ele simplesmente te permite editar arquivos de texto no seu sistema, semelhante ao bloco de notas/notepad no Windows. Note que eu nomeei o arquivo <code>meusite</code>, mas você pode usar o nome que quiser.</p> 
+		<p>Agora, vamos adicionar o seguinte conteúdo ao arquivo, palavras que forem <u><em>escritas assim</em></u> vão ser diferentes para você, dependendo de como você quer chamar seu site.</p>
+		<p>Para salvar o arquivo, digite <code>Control + S</code>, para fechá-lo, <code>Control + X</code>.</p>
+		<code><pre>
+		server { 
+			listen 80 ;
+			listen [::]:80 ;
+			server_name <u><em>exemplo.org</em></u> ;
+			root /var/www/<u><em>meusite</em></u> ;
+			index index.html ;
+			location / {
+				try_files $uri $uri/ =404 ;
+			}
+		}
+		</pre></code>
+		<h3><u>Explicação dessas linhas</u></h3>
+		<p>A opção <code>listen</code> define que o webserver vai receber, ou “ouvir”, por conexões na porta 80 para endereços IPv4 e IPv6 respectivamente.</p>
+		<p><code>server_name</code> é o nome do website a ser hospedado. Se eu colocar <code>livreware.org</code> ali, qualquer um que tentar conectar à esse site vai ser direcionado ao conteúdo nesse bloco.</p>
+		<p><code>root</code> especifica a pasta onde vamos botar os arquivos do nosso site. Essa pasta pode ser em qualquer lugar, mas é normalmente colocada em <code>/var/www</code>. Coloque o nome que quiser nessa pasta.</p>
+		<p><code>index</code> define qual vai ser o arquivo “padrão” do seu site. Quando você acessa um site, como <code>livreware.org</code>, você está, na verdade acessando um arquivo localizado em <code>livreware.org/index.html</code>, só isso. Note que, em conjunção com a linha acima, o nosso arquivo padrão ficará localizado, por exemplo, em <code>/var/www/livreware.org/index.html</code>, e essa será a página principal do nosso site. Esse arquivo será criando daqui a pouco.</p>
+		<p>Por último, a opção <code>location</code> diz como o webserver deve procurar pelos arquivos do site, e se não encontrá-los, exiba um erro 404.</p>
+		<h3><u>Criando a pasta e o index do site</u></h3>
+		<p>Vamos criar uma página inicial simples para o seu site. Primeiro, vamos criar a pasta que foi definida no arquivo acima, utilizando o comando <code>mkdir</code>.</p>
+		<code><pre>
+		mkdir /var/www/<u><em>meusite</em></u>
+		</pre></code>
+		<p>Agora vamos criar o arquivo index.html que vai aparecer quando o site for acessado.</p>
+		<code><pre>
+		nano /var/www/<u><em>meusite</em></u>/index.html
+		</pre></code>
+		<p>Eu vou adicionar o seguinte conteúdo, mas você pode adicionar o que quiser, contanto que seja HTML válido. Isso é o que vai aparecer no seu site.</p>
+		<code><pre>
+		&lt;!DOCTYPE html&gt;
+		&lt;h1&gt;Meu website!&lt;/h1&gt;
+		&lt;p&gt;Bem-vindo ao meu site. Obrigado pela visita!&lt;/p&gt;
+		</pre></code>
+		<h3><u>Habilite o site</u></h3>
+		<p>Quando tiver salvado esse arquivo, você pode habilitá-lo criando un link para a pasta <code>sites-enabled</code>:</p>
+		<code><pre>
+		ln -s /etc/nginx/sites-available/<u><em>meusite</em></u> /etc/nginx/sites-enabled/
+		</pre></code>
+		<p>Agora, reinicie <code>nginx</code> para as mudanças tomarem efeito:</p>
+		<code><pre>
+		systemctl restart nginx
+		</pre></code>
+
+		<h2><u>Firewall</u></h2>
+		<p>Algumas VPSes vem com o firewall <code>ufw</code> instalado por padrão, outras não. De qualquer forma, eu recomendo usá-lo.</p>
+		<code><pre>
+		apt install ufw
+		ufw allow ssh
+		ufw allow 80
+		ufw allow 443
+		ufw enable
+		</pre></code>
+		<p>A primeira linha instala o programa. A segunda, terceira e quarta linha abrem as portas necessários para o acesso SSH e para seu site funcionar. A quinta linha habilita o firewall. <strong>É importante rodar o comando <code>ufw allow ssh</code> antes de <code>ufw enable</code>, pois caso o firewall não esteja configurado pra aceitar conexões SSH, você será deconectado e impedido de conectar de novo ao servidor</strong>. Conforme você vai instalando novos serviços no seu servidor, você precisará abrir mais portas, porém isso será mencionado nos seus respectivos artigos, por enquanto essas são as únicas configurações necessárias.</p>
+		
+		<h2><u>Dica de segurança</u></h2>
+		<p>Por padrão, Nginx e outros webservers mostram sua versão em páginas de erros. Isso pode ser um risco, pois caso uma vulnerabilidade seja descoberta para a versão que está rodando no seu servidor, isso facilitaria quem alguém o atacasse. Para desabilitar isso, abra o arquivo <code>/etc/nginx/nginx.conf</code>, encontre a linha que diz <code># server_tokens off;</code>, remova o "#" do começo dela e reinicie Nginx. Linhas que começam com "#" são ditas "comentadas", pois elas não serão lidas pelo programa e servem como comentários da configuração. Colocar um "#" no começo de uma linha significa "comentar" e remover esse símbolo é chamado de "descomentar".</p>
+		<p>Lembre-se de atualizar seu software para consertar vulnerabilidades!</p>
+
+		<h2><u>Nosso site agora está funcionando!</u></h2>
+		<p>Nesse ponto, você pode digitar o seu domínio na barra de endereço do seu navegador e sua página irá aparecer.</p>
+		<figure>
+			<a href="../img/site-funcionando.png"><img src="../img/site-funcionando.png"></a>
+		</figure>
+		<p>Perceba que o cadeado ao lado do domínio indica que nossa conexão não é segura, isso será resolvido no próximo passo.</p>
+
+		<h2><a href="certbot.html">-> Próximo: Certbot e HTTPS</a></h2>
+		<h2><a href="dns.html">&lt;- Anterior: Conectando seu domínio e servidor via DNS</a></h2>
+
+		<footer>
+			<a href="https://landchad.net/basic/nginx/">Adaptado de LandChad.net</a>
+			<hr>
+			<a href="../index.html">De volta ao início</a>
+		</footer>
+	</body>
+</html>
