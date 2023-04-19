@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt">
+	<head>
+		<title>Mumble</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="style.css">
+		<link rel="icon" type="image/png" href="img/icon.png">
+	</head>
+
+	<body>
+		<h1><u>Mumble</u></h1>
+		<p><a href="https://www.mumble.info/">Mumble</a> é um serviço de chat por voz de alta qualidade e de baixa latência. Por ser bem leve, é uma ótima escolha para qualquer comunicação por voz, seja jogos, podcasts ou reuniões.</p>
+		<h2><u>Instalação</u></h2>
+		<p>Para instalá-lo, rode o comando após se conectar ao seu servidor/VPS:</p>
+
+		<code><pre>
+		apt install mumble-server
+		</pre></code>
+		
+		<p>Mumble utiliza a porta 64738 por padrão, então permita conexões por ela em seu firewall:</p>
+		
+		<code><pre>
+		ufw allow 64738
+		</pre></code>
+
+		<p>Está pronto! Isso é tudo que precisa para um servidor básico funcionar. Agora, basta <a href="https://www.mumble.info/downloads/">instalar Mumble</a>, junto com <a href="https://aka.ms/vs/17/release/vc_redist.x64.exe">Microsoft Visual C++</a> no seu computador. Ao abrir o Mumble, siga cuidadosamente o Assistente para Ajuste de Áudio, para garantir que seu áudio funcione corretamente. Após isso, haverá uma janela que diz "Conexão ao servidor Mumble", caso essa tela não apareça, ou você a tenha fechado, pode abrí-la clicando na opção Servidor -&gt; Conectar na janela principal do Mumble. </p>
+		<p>Para se conectar ao seu servidor, clique em Adicionar Novo, escolha um nome de usuário, e onde pede Endereço, coloque o domínio do seu servidor, algo como <code><em><u>exemplo.org</u></em></code>. Clique em Conectar, "Sim" para aceitar o certificado, e pronto! Você está conectado ao seu servidor Mumble. Para que outras pessoas se conectem ao seu servidor, basta que elas baixem o Mumble em seus computadores, façam a configuração de áudio inicial, e coloquem o nome do seu site no "Endereço" ao se conectarem a um servidor.</p>
+		<h2><u>Configurando um servidor privado</u></h2>
+		<p>Por padrão, qualquer pessoa pode se conectar ao seu servidor Mumble, caso você queira que ele apenas seja usado por um grupo seleto, seja seus amigos ou colegas de trabalho, você pode configurar uma senha para entrar no servidor. Para fazer isso, abra o arquivo <code>/etc/mumble-server.ini</code> usando um editor de texto e procure pela linha que diz:</p>
+		<code><pre>
+		serverpassword=
+		</pre></code>
+
+		<p>E a altere para</p>
+		
+		<code><pre>
+		serverpassword=<em><u>alguma_senha</u>
+		</em></pre></code>
+
+		<p>Reinicie o servidor Mumble para essa mudança surtir efeito.</p>
+		
+		<code><pre>
+		systemctl restart murmurd
+		</pre></code>
+
+		<p>Agora, qualquer um se conectando ao seu servidor deverá digitar a senha que você definiu para poder entrar. Para configurações mais avançadas, como configurar um Admnistrador e permissões para diferentes canais, leia a <a href="https://wiki.mumble.info/wiki/Murmurguide">documentação</a>.</p>
+		<p>Divirta-se com seu servidor!</p>
+
+		<footer>
+			<hr>
+			<a href="index.html">De volta ao início</a>
+		</footer>
+	</body>
+</html>
