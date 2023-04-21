@@ -9,6 +9,18 @@ body {
 	margin: auto;
 }
 
+code {
+	background: #f1f1f1;
+	font-size: 14px;
+	padding: 2px;
+}
+
+.codeblock {
+	display: block;
+	padding: 10px;
+	white-space: pre-wrap;
+}
+
 figure {
 	text-align: center;
 }
