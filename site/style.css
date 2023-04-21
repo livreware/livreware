@@ -17,6 +17,7 @@ code {
 
 .codeblock {
 	display: block;
+	text-align: left;
 	padding: 10px;
 	white-space: pre-wrap;
 }
