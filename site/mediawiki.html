@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt">
 	<head>
-		<title>Mediawiki</title>
+		<title>MediaWiki</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="style.css">
@@ -9,17 +9,17 @@
 	</head>
 
 	<body>
-		<h1><u>Mediawiki</u></h1>
-		<p><a href="https://www.mediawiki.org/">Mediawiki</a> é um programa de wiki que permite colaboração e compartilhamento de conhecimento entre vários usuários. É usado pela Wikipédia e várious outros sites. É uma boa escolha para uma criar uma repositório de conhecimento onde várias pessoas possam ler e colaborar para torná-lo ainda melhor.</p>
+		<h1><u>MediaWiki</u></h1>
+		<p><a href="https://www.mediawiki.org/">MediaWiki</a> é um programa de wiki que permite colaboração e compartilhamento de conhecimento entre vários usuários. É usado pela Wikipédia e várious outros sites. É uma boa escolha para uma criar uma repositório de conhecimento onde várias pessoas possam ler e colaborar para torná-lo ainda melhor.</p>
 
 		<h2><u>Instalação</u></h2>
-		<p>Para instalar Mediawiki, vamos primeiro instalar suas dependências e adicionalmente o programa <code>wget</code> para fazer o download do MediaWiki em si. Conecte-se ao seu servidor e rode o seguinte comando:</p>
+		<p>Para instalar MediaWiki, vamos primeiro instalar suas dependências e adicionalmente o programa <code>wget</code> para fazer o download do MediaWiki em si. Conecte-se ao seu servidor e rode o seguinte comando:</p>
 
 <code class="codeblock">apt update
 apt upgrade
 apt install imagemagick mariadb-server php php-apcu php-cli php-curl php-fpm php-intl php-json php-mbstring php-mysql php-xml wget</code>
 
-		<p>Agora, vamos baixar o Mediawiki.</p>
+		<p>Agora, vamos baixar o MediaWiki.</p>
 		
 <code class="codeblock">wget https://releases.wikimedia.org/mediawiki/1.39/mediawiki-1.39.3.tar.gz</code>
 
@@ -111,7 +111,7 @@ systemctl restart nginx</code>
 			<a href="img/mediawiki.png"><img src="img/mediawiki.png"></a>
 		</figure>
 		<p>Após isso, siga as instruções na tela, clique em "ajuda" caso tenha dúvida. Ao final, clique em "Faça-me mais perguntas" caso queira configurar algumas coisas a mais, ou "Já estou aborrecido, apenas instale a wiki" para usar as configurações padrão.</p>
-		<p>Ao final dessa configuração, você irá baixar um arquivo chamado "LocalSettings.php". Este arquivo contém suas configurações, e deve ser enviado à sua pasta do Mediawiki em seu servidor. A forma mais fácil é com o comando <code>scp</code>. Por exemplo, caso você esteja usando Windows e salvou LocalSettings.php na pasta "Downloads", abra um Prompt de Comando rode esse comando.</p>
+		<p>Ao final dessa configuração, você irá baixar um arquivo chamado "LocalSettings.php". Este arquivo contém suas configurações, e deve ser enviado à sua pasta do MediaWiki em seu servidor. A forma mais fácil é com o comando <code>scp</code>. Por exemplo, caso você esteja usando Windows e salvou LocalSettings.php na pasta "Downloads", abra um Prompt de Comando rode esse comando.</p>
 
 <code class="codeblock">scp Downloads\LocalSettings.php root@livreware.org:/var/www/mediawiki/</code>
 
