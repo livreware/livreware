@@ -21,6 +21,16 @@ code {
 	white-space: pre-wrap;
 }
 
+table {
+	text-align: center;
+	margin: auto;
+	border-style: solid;
+}
+
+th, td {
+	padding: 5px;
+}
+
 figure {
 	text-align: center;
 }
