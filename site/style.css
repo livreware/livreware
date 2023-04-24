@@ -25,11 +25,13 @@ table {
 	text-align: center;
 	margin: auto;
 	border-style: solid;
+	border-color: black;
 }
 
 th, td {
 	padding: 5px;
 	border-style: solid;
+	border-color: black;
 }
 
 figure {
