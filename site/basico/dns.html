@@ -16,26 +16,26 @@
 		<h2><u>Abra seu registrador</u></h2>
 		<p>Como estamos usando a Hostinger tanto como registrador como provedor de VPS, a configuração fica um pouco mais simples. Caso esteja usando algo diferente, adapte as instruções de acordo com sua necessidade. Na Hostinger, clique em "Gerenciar" no domínio que você quer configurar, e em seguida clique em "DNS/Nameservers". Essa é a tela que você deve ver. Talvez hajam outros registros de DNS presentes, você pode deletá-los se quiser para deixar tudo mais limpo e organizado, eles não são necessários.</p>
 		<figure>
-			<a href="../img/dns-record.png"><img src="../img/dns-record.png" alt="Página de configuração de um domínio, aberta na seção "DNS/Nameservers""width=750></a>
+			<a href="../img/dns-record.png"><img src="../img/dns-record.png" alt="Página de configuração de um domínio, aberta na seção 'DNS/Nameservers'" width=750></a>
 		</figure>
 		<p>Em seguida, em outra aba, selecione a VPS que quer usar, clique em Gerenciar -&gt; Configurações -&gt; Endereço do IP.</p>
 		<figure>
-			<a href="../img/ip.png"><img src="../img/ip.png" alt="Página de configuração de uma VPS, aberta na seção "Endereço de IP"" width=750></a>
+			<a href="../img/ip.png"><img src="../img/ip.png" alt="Página de configuração de uma VPS, aberta na seção 'Endereço de IP'" width=750></a>
 		</figure>
 		<p>Copie o endereço IPv4. Na página de DNS, adicione dois registros do tipo A, que apontam para o IP que você copiou, cujos nomes são "seudominio.com" e "*". A sua tela deve mostrar algo assim.</p>
 		<figure>
-			<a href="../img/dns-ipv4.png"><img src="../img/dns-ipv4.png" alt="Página de configuração de um domínio, na seção "Gerenciar registros DNS", após adicionar as configurações acima" width=750></a>
+			<a href="../img/dns-ipv4.png"><img src="../img/dns-ipv4.png" alt="Página de configuração de um domínio, na seção 'Gerenciar registros DNS', após adicionar as configurações acima" width=750></a>
 		</figure>
 		<p>O registro com um "@" no nome signifca simplesmente o seu domínio, no meu caso <code>livreware.org</code>. "@" é só um apelido do domínio sendo configurado. O outro registro, "*" significa que qualquer subdomínio que seja adicionado no futuro, como <code>mail.livreware.org</code> ou <code>blog.livreware.org</code>, será direcionado ao IP correto.</p>
 		<p>Faça agora a mesma coisa com o endereço IPv6, estes usam um tipo de registro AAAA. Sua página deve ficar assim.</p>
 		<figure>
-			<a href="../img/dns-ipv6.png"><img src="../img/dns-ipv6.png" alt="Página de configuração de um domínio, na seção "Gerenciar registros DNS", após adicionar as configurações IPv4 e IPv6" width=750></a>
+			<a href="../img/dns-ipv6.png"><img src="../img/dns-ipv6.png" alt="Página de configuração de um domínio, na seção 'Gerenciar registros DNS', após adicionar as configurações IPv4 e IPv6" width=750></a>
 		</figure>
 
 		<h2><u>Hora de testar!</u></h2>
 		<p>Se tudo deu certo, você pode agora abrir um terminal e utilizar o comando <code>ping</code> para testar seu site.</p>
 		<figure>
-			<a href="../img/ping.png"><img src="../img/ping.png" alt="Terminal mostrando o resultado do comando "ping livreware.org"" width=700></a>
+			<a href="../img/ping.png"><img src="../img/ping.png" alt="Terminal mostrando o resultado do comando 'ping livreware.org'" width=700></a>
 		</figure>
 		<p>Como dá pra ver, o endereço de IP do <code>ping</code> é o mesmo que o endereço que configuramos pro domínio, ou seja, o registro DNS funcionou! Próximo passo: instalar um webserver.</p>
 
