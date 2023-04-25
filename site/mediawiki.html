@@ -108,7 +108,7 @@ systemctl restart nginx</code>
 
 		<p>Você pode agora acessar <em><u>wiki.exemplo.org</u></em> e continuar a instalação por lá. A Primeira tela vai te pedir para escolher uma linguagem, escolha "pt-br" a menos que queira outra. Ao chegar na seção "Conectar ao banco de dados", aonde pede o nome da base de dados, digite o nome do banco de dados que você criou acima, no meu caso, <code><em>my_wiki</em></code>. Na parte "Conta de usuário para instalação", escreva o nome e senha para o usuário que você criou acima, no meu caso, o usuário é <code><em>wikiuser</em></code>. Sua tela vai ficar mais ou menos assim.</p>
 		<figure>
-			<a href="img/mediawiki.png"><img src="img/mediawiki.png"></a>
+			<a href="img/mediawiki.png"><img src="img/mediawiki.png" alt="Página de configuração de banco de dados preenchida com as informações acima"></a>
 		</figure>
 		<p>Após isso, siga as instruções na tela, clique em "ajuda" caso tenha dúvida. Ao final, clique em "Faça-me mais perguntas" caso queira configurar algumas coisas a mais, ou "Já estou aborrecido, apenas instale a wiki" para usar as configurações padrão.</p>
 		<p>Ao final dessa configuração, você irá baixar um arquivo chamado "LocalSettings.php". Este arquivo contém suas configurações, e deve ser enviado à sua pasta do MediaWiki em seu servidor. A forma mais fácil é com o comando <code>scp</code>. Por exemplo, caso você esteja usando Windows e salvou LocalSettings.php na pasta "Downloads", abra um Prompt de Comando rode esse comando.</p>
