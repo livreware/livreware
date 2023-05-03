@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt">
+	<head>
+		<title>DokuWiki</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="style.css">
+		<link rel="icon" type="image/png" href="img/icon.png">
+	</head>
+
+	<body>
+		<h1><u>DokuWiki</u></h1>
+		<p>DokuWiki é um simples programa de wiki, semelhante à <a href="mediawiki.html">MediaWiki</a>. Diferente do MediaWiki, ele utiliza arquivos de texto para armazenar seu conteúdo, ao invés de bancos de dados, tornando-o mais simples de configurar. É uma boa escolha caso você queria um software de wiki simples, sem todas as complexidades do MediaWiki.</p>
+
+		<h2><u>Instalação</u></h2>
+		<p>Embora DokuWiki esteja disponível nos repositórios do Debian, está desatualizado e utiliza uma estrutura de diretórios diferentes do padrão, o que pode causa incompatibiliade com alguns plugins. Então, vamos instalá-lo por uma tarball.</p>
+		<p>Primeiro, instale as dependências:</p>
+
+<code class="codeblock">apt install nginx php php-fpm php-xml php-mbstring php-zip php-intl php-gd wget</code>
+
+		<p>Agora, baixe a tarball com <code>wget</code>, extraia o arquivo com <code>tar</code>, remove a tarball com <code>rm</code>, mova a pasta para o lugar certo com <code>mv</code>, e configure as devidas permissões com <code>chown</code>.</p>
+
+<code class="codeblock">wget https://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz
+tar xzvf dokuwiki-stable.tgz
+rm dokuwiki-stable.tgz
+mv dokuwiki-* /var/www/dokuwiki
+chown -R www-data:www-data /var/www/dokuwiki</code>
+
+		<h2><u>Configuração Nginx</u></h2>
+		<p>Crie um arquvio chamado <code>/etc/nginx/sites-available/dokuwiki</code> com seu editor de texto favorito e adicione as seguintes linhas, que foram baseadas na configuração <a href="https://www.dokuwiki.org/install:nginx">daqui</a>. <strong>Lembre-se de trocar <em><u>wiki.exemplo.org</u></em> pelo nome do seu site ou subdomínio.</strong> Preste atenção também na linha que diz <code>client_max_body_size</code>, que determina o tamnho máximo de arquivo permitido para uploads, e a primeira linha que diz <code>location</code>, pois ela deve estar comentada durante a instalação, e descomentada quando a instalação for finalizada.<p>
+
+<code class="codeblock">server {
+    listen 80;
+    listen [::]:80;
+    server_name wiki.exemplo.org;
+
+    # O tamanho maximo permitido para uploads e 4MB - mude conforme necessario
+    client_max_body_size 4M;
+    client_body_buffer_size 128k;
+
+    root /var/www/dokuwiki;
+    index doku.php;
+
+    #Lembre-se de manter a linha abaixo comentada durante a instalacao, e descomenta-la quando finalizar.
+    #location ~ /(conf/|bin/|inc/|vendor/|install.php) { deny all; }
+
+    #Suporte para X-Accel-Redirect
+    location ~ ^/data/ { internal ; }
+
+    location ~ ^/lib.*\.(js|css|gif|png|ico|jpg|jpeg)$ {
+        expires 365d;
+    }
+
+    location / { try_files $uri $uri/ @dokuwiki; }
+
+    location @dokuwiki {
+        # remove "doku.php/" dos URLs se voce configurou a opcao userwrite para .htaccess na pagina de configuracao do dokuwiki
+        rewrite ^/_media/(.*) /lib/exe/fetch.php?media=$1 last;
+        rewrite ^/_detail/(.*) /lib/exe/detail.php?media=$1 last;
+        rewrite ^/_export/([^/]+)/(.*) /doku.php?do=export_$1&id=$2 last;
+        rewrite ^/(.*) /doku.php?id=$1&$args last;
+    }
+
+    location ~ \.php$ {
+        try_files $uri $uri/ /doku.php;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param REDIRECT_STATUS 200;
+        fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+        # fastcgi_pass unix:/var/run/php5-fpm.sock; #versao antiga de php
+    }
+}</code>
+
+		<p>Habilite o site:</p>
+
+<code class="codeblock">ln -s /etc/nginx/sites-available/dokuwiki /etc/nginx/sites-enabled/</code>
+
+		<p>Gere um certificado SSL para o subdomínio:</p>
+
+<code class="codeblock">certbot --nginx</code>
+
+		<p>Reinicie o nginx e php para que as mudanças tomem efeito:</p>
+
+<code class="codeblock">systemctl restart nginx &amp;&amp; systemctl restart php7.4-fpm</code>
+
+		<p>Finalmente, acesse <em><u>wiki.exemplo.org/install.php</u></em> para finalizar a instalação. Caso queria uma interface em português, vá na opção "Choose your language" e selecione "pt-br". Leia a <a href="https://www.dokuwiki.org/installer">documentação</a> para entender o que cada um desses itens significa.</p>
+		<p>Terminando isso, lembre-se de descomentar a linha contendo <code>location</code> no seu arquivo de configuração nginx. Abra <code>/etc/nginx/sites-available/dokuwiki</code> com um editor de texto e remova o "#" no começo da linha:</p>
+
+<code class="codeblock">#Lembre-se de manter a linha abaixo comentada durante a instalacao, e descomenta-la quando finalizar
+location ~ /(conf/|bin/|inc/|vendor/|install.php) { deny all; }</code>
+
+		<p>Reinicine nginx mais uma vez para as mudanças ocorrerem:</p>
+
+<code class="codeblock">systemctl restart nginx</code>
+
+		<p>Sua wiki agora está online! Divirta-se, e <em>happy hacking</em>.</p>
+
+		<footer>
+			<a href="https://landchad.net/dokuwiki/">Adaptado de LandChad.net</a>
+			<hr>
+			<a href="index.html">De volta ao início</a>
+		</footer>
+	</body>
+</html>
