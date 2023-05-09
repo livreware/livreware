@@ -19,6 +19,7 @@ code {
 	text-align: left;
 	padding: 10px;
 	white-space: pre-wrap;
+	overflow-wrap: break-word;
 }
 
 figure {
