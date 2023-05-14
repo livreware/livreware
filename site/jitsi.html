@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt">
+	<head>
+		<title>Jitsi</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="style.css">
+		<link rel="icon" type="image/png" href="img/icon.png">
+	</head>
+
+	<body>
+		<h1><u>Jitsi</u></h1>
+		<p><a href="https://jitsi.org/">Jitsi</a> é uma coleção de projetos de software livre que te permitem facilmente hospedar e utilizar programas de conferência de vídeo. É extremamente fácil de instalar, e é muito mais privado e livre do que alternativas como Zoom ou Google Meet. Você pode criar chamadas simplesmente ao digitar um link, pois fazer login não é necessário.</p>
+		<h2><u>Dependências</u></h2>
+		<p>Primeiro, vamos instalar as dependências. Entre em seu servidor e rode o seguinte comando:</p>
+
+		<code class="codeblock">apt install apt-transport-https curl gpg python3-certbot-nginx nginx</code>
+
+		<p>Jitsi tem seu próprio repositório, então vamos adicioná-lo.</p>
+
+		<code class="codeblock">curl https://download.jitsi.org/jitsi-key.gpg.key | gpg --dearmor &gt; /usr/share/keyrings/jitsi-keyring.gpg
+echo 'deb [signed-by=/usr/share/keyrings/jitsi-keyring.gpg] https://download.jitsi.org stable/' &gt; /etc/apt/sources.list.d/jitsi-stable.list
+apt update -y</code>
+
+		<h2><u>Firewall</u></h2>
+		<p>Caso você tenha <code>ufw</code>, ou algum outro firewall instalado, abra as seguintes portas:</p>
+
+		<code class="codeblock">ufw allow 80/tcp
+ufw allow 443/tcp
+ufw allow 10000/udp
+ufw enable</code>
+
+		<h2><u>Certificado SSL</u></h2>
+		<p>Vamos usar <a href="basico/certbot.html">Certbot</a> e <a href="basico/nginx.html">Nginx</a> para gerar um certificado para o subdomínio Jitsi para permitir conexões criptografadas. Substitua <u><em>meet.exemplo.org</em></u> para o subdomínio de sua escolha.</p>
+
+		<code class="codeblock">certbot certonly --nginx -d <u><em>meet.exemplo.org</em></u></code>
+
+		<h2><u>Instalação</u></h2>
+		<p>Para instalar o Jitsi, rode o comando:</p>
+
+		<code class="codeblock">apt install jitsi-meet</code>
+
+		<p>O programa irá lhe pedir um endereço, digite o subdomínio escolhido acima, como <u><em>meet.exemplo.org</em></u>.</p>
+		<p>Depois, ele perguntará por um certificado SSL, escolha <code>I want to use my own certificate</code>. Em seguida ele irá te perguntar a localização da sua chave criptográfica e certificado. Escreva, respectivamente, <code>/etc/letsencrypt/live/<u><em>meet.exemplo.org</em></u>/privkey.pem</code> e <code>/etc/letsencrypt/live/<u><em>meet.exemplo.org</em></u>/fullchain.pem</code>, utilizando o subdomínio escolhido.</p>
+		<p>Para a próxima questão, basta dizer "No".</p>
+
+		<h2><u>Utilização</u></h2>
+		<p>Para utilizar o Jitsi, abra um navegador e acesse <u><em>meet.exemplo.org</em></u>. Digite um nome pra sua sala na caixa ao lado de "Start Meeting", ou simplesmente clique nesse mesmo botão para começar uma chamada. O endereço da chamada será <code>meet.exemplo.org/nomedachamada</code>, basta copiar o link da sua barra de endereço do navegador e enviar à outras pessoas para que elas possam entrar.</p>
+		<p>Jitsi também tem <a href="https://jitsi.org/downloads/">aplicativos</a> para celulares. <strong>Caso escolha usar um aplicativo, não se esqueça de ir nas configurações e mudar o endereço do servidor para o endereço que você configurou, como <u><em>meet.exemplo.org</em></u>.</strong></p>
+
+		<h2><u>Segurança</u></h2>
+		<p>Por padrão, qualquer um que souber seu endereço pode criar chamadas no seu servidor. Talvez você não queria isso, então você pode configurar uma autenticação. A forma mais simples é utilizando o banco de dados do Prosody, um programa que foi instalado junto com Jitsi.</p>
+
+		<h3>Configuração Prodosy</h3>
+		<p>Primeiro, precisamos habilitar autenticação por senha no Prosody. Edite <code>/etc/prosody/conf.avail/<u><em>meet.exemplo.org</em></u>.cfg.lua</code> com um editor de texto e localize esse bloco.<p>
+		<code class="codeblock">VirtualHost "<u><em>meet.exemplo.org</em></u>"
+    authentication = "anonymous"</code>
+
+		<p>E mude a opção <code>authentication</code> de <code>anonymous</code> para <code>internal_hashed</code>.</p>
+		<p>Em seguida, para permitir que convidados e pessoas não autenticadas se juntem às chamadas existentes (mas sem ser capazes de criar novas chamadas), adicione o seguinte bloco <strong>após o bloco anterior</strong>. Para saber onde um bloco começa ou termina, olhe o começo das linhas. Se não houver identação, ou seja, espaço em branco antes da linha, ali está começando um bloco. Se houver sim identação, aquela linha define uma opção dentro de um bloco. No código acima, a linha <code>Virtual Host</code> define o começo de um bloco, pois não está identada, já a linha <code>authentication</code> define uma opção no bloco <code>Virtual Host</code>, pois está identada. O bloco acima já deve conter outras opções, então vá para baixo até que acabem suas opções e adicione esse novo bloco.</p>
+
+		<code class="codeblock">VirtualHost "guest.<u><em>meet.exemplo.org</em></u>"
+    authentication = "anonymous"
+    c2s_require_encryption = false</code>
+
+		<p>Salve e feche o arquivo. Ele deve ficar mais ou menos assim:</p>
+
+		<code class="codeblock">VirtualHost "<u><em>meet.exemplo.org</em></u>"
+    authentication = "internal_hashed"
+    <em>outras opcoes</em>
+    ...
+    ...
+    ...
+<em>(uma linha em branco separanado os blocos)</em>
+VirtualHost "guest.<u><em>meet.exemplo.org</em></u>"
+    authentication = "anonymous"
+    c2s_require_encryption = false</code>
+
+		<h3>Configuração Jitsi Meet</h3>
+		<p>Depois disso, abra <code>/etc/jitsi/meet/<u><em>meet.example.org</em></u>-config.js</code> e descomente (remova as "//" do começo) a seguinte linha:</p>
+
+		<code class="codeblock">var config = {
+    hosts: {
+        // anonymousdomain: 'guest.jitsi-meet.example.com',
+    },
+}</code>
+		<p>E mude <code>'guest.jitsi-meet.example.com'</code> para <code>'guest.<u><em>meet.exemplo.org</em></u>'</code> (seu subdomínio precedido por <code>guest</code>.).</p>
+		<h3>Configuração Jicofo</h3>
+		<p>Por último, iremos configurar Jicofo para apenas permitir a criação de chamadas por usuários autenticados. Para fazer isso, adicione a seção <code>authentication { ... }</code> no arquivo <code>/etc/jitsi/jicofo/jicofo.conf</code>:</p>
+
+		<code class="codeblock">jicofo {
+  authentication: {
+    enabled: true
+    type: XMPP
+    login-url: <u><em>meet.exemplo.org</em></u>
+}</code>
+		<h3>Criando usuários</h3>
+		<p>Agora você deve criar usuários via Prosody. Você pode fazer isso manualmente usando o comando <code>prosodyctl</code>:</p>
+
+		<code class="codeblock">prosodyctl register <em>usuario</em> <u><em>meet.exemplo.org</em></u> <em>senha</em></code>
+
+		<p>Por fim, reincie os programas <code>prosody</code>,<code>jicofo</code> e <code>jitsi-videobridge2</code>:</p>
+
+		<code class="codeblock">systemctl restart prosody
+systemctl restart jicofo
+systemctl restart jitsi-videobridge2</code>
+		<p>Agora, sempre que quiser inicar uma chamada, você receberá uma mensagem dizendo que está esperando pelo host. Clique "I am the host" e insira o usuário e senha criados acima. Agora apenas pessoas autenticadas podem criar chamadas, porém até mesmo quem não está autenticado pode se juntar a elas.</p>
+		<p>Aproveite suas chamadas em completa liberdade!</p>
+
+		<footer>
+			<a href="https://landchad.net/jitsi/">Adaptado de LandChad.net</a>
+			<hr>
+			<a href="index.html">De volta ao início</a>
+		</footer>
+	</body>
+</html>
