@@ -54,9 +54,9 @@ ufw enable</code>
 		<h3>Configuração Prodosy</h3>
 		<p>Primeiro, precisamos habilitar autenticação por senha no Prosody. Edite <code>/etc/prosody/conf.avail/<u><em>meet.exemplo.org</em></u>.cfg.lua</code> com um editor de texto e localize esse bloco.<p>
 		<code class="codeblock">VirtualHost "<u><em>meet.exemplo.org</em></u>"
-    authentication = "anonymous"</code>
+    authentication = "jitsi-anonymous"</code>
 
-		<p>E mude a opção <code>authentication</code> de <code>anonymous</code> para <code>internal_hashed</code>.</p>
+		<p>E mude a opção <code>authentication</code> de <code>jitsi-anonymous</code> para <code>internal_hashed</code>.</p>
 		<p>Em seguida, para permitir que convidados e pessoas não autenticadas se juntem às chamadas existentes (mas sem ser capazes de criar novas chamadas), adicione o seguinte bloco <strong>após o bloco anterior</strong>. Para saber onde um bloco começa ou termina, olhe o começo das linhas. Se não houver identação, ou seja, espaço em branco antes da linha, ali está começando um bloco. Se houver sim identação, aquela linha define uma opção dentro de um bloco. No código acima, a linha <code>Virtual Host</code> define o começo de um bloco, pois não está identada, já a linha <code>authentication</code> define uma opção no bloco <code>Virtual Host</code>, pois está identada. O bloco acima já deve conter outras opções, então vá para baixo até que acabem suas opções e adicione esse novo bloco.</p>
 
 		<code class="codeblock">VirtualHost "guest.<u><em>meet.exemplo.org</em></u>"
@@ -77,7 +77,7 @@ VirtualHost "guest.<u><em>meet.exemplo.org</em></u>"
     c2s_require_encryption = false</code>
 
 		<h3>Configuração Jitsi Meet</h3>
-		<p>Depois disso, abra <code>/etc/jitsi/meet/<u><em>meet.example.org</em></u>-config.js</code> e descomente (remova as "//" do começo) a seguinte linha:</p>
+		<p>Depois disso, abra <code>/etc/jitsi/meet/<u><em>meet.exemplo.org</em></u>-config.js</code> e descomente (remova as "//" do começo) a seguinte linha:</p>
 
 		<code class="codeblock">var config = {
     hosts: {
