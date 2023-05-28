@@ -1,4 +1,4 @@
-h1,h2 {
+h1,h2,figure,footer {
 	text-align: center;
 }
 
@@ -22,14 +22,6 @@ code {
 	white-space: pre-wrap;
 }
 
-figure {
-	text-align: center;
-}
-
 img {
 	max-width: 100%;
-}
-
-footer {
-	text-align: center;
 }
