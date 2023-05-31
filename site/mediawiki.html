@@ -111,9 +111,9 @@ systemctl restart nginx</code>
 			<a href="img/mediawiki.png"><img src="img/mediawiki.png" alt="Página de configuração de banco de dados preenchida com as informações acima"></a>
 		</figure>
 		<p>Após isso, siga as instruções na tela, clique em "ajuda" caso tenha dúvida. Ao final, clique em "Faça-me mais perguntas" caso queira configurar algumas coisas a mais, ou "Já estou aborrecido, apenas instale a wiki" para usar as configurações padrão.</p>
-		<p>Ao final dessa configuração, você irá baixar um arquivo chamado "LocalSettings.php". Este arquivo contém suas configurações, e deve ser enviado à sua pasta do MediaWiki em seu servidor. A forma mais fácil é com o comando <code>scp</code>. Por exemplo, caso você esteja usando Windows e salvou LocalSettings.php na pasta "Downloads", abra um Prompt de Comando rode esse comando.</p>
+		<p>Ao final dessa configuração, você irá baixar um arquivo chamado "LocalSettings.php". Este arquivo contém suas configurações, e deve ser enviado à sua pasta do MediaWiki em seu servidor. A forma mais fácil é com o comando <code>scp</code>. Por exemplo, caso você esteja usando Windows e salvou LocalSettings.php na pasta "Downloads", abra um Prompt de Comando rode esse comando, substituindo pelo seu domínio.</p>
 
-<code class="codeblock">scp Downloads\LocalSettings.php root@livreware.org:/var/www/mediawiki/</code>
+		<code class="codeblock">scp Downloads\LocalSettings.php root@<em><u>exemplo.org</u></em>:/var/www/mediawiki/</code>
 
 		<h2><u>Configurações finais</u></h2>
 		<p>Sua wiki agora está pronta! Os passos a seguir são opcionais, porém recomendo seguí-los para garantir a segurança e estabilidade da sua wiki.<p>
