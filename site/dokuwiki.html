@@ -10,7 +10,7 @@
 
 	<body>
 		<h1><u>DokuWiki</u></h1>
-		<p><a href="https://www.dokuwiki.org/">DokuWiki</a> é um simples programa de wiki, semelhante à <a href="mediawiki.html">MediaWiki</a>. Diferente do MediaWiki, ele utiliza arquivos de texto para armazenar seu conteúdo, ao invés de bancos de dados, tornando-o mais simples de configurar. É uma boa escolha caso você queria um software de wiki simples, sem todas as complexidades do MediaWiki.</p>
+		<p><a href="https://www.dokuwiki.org/">DokuWiki</a> é um simples programa de wiki, semelhante à <a href="mediawiki.html">MediaWiki</a>. Diferente do MediaWiki, ele utiliza arquivos de texto para armazenar seu conteúdo, ao invés de bancos de dados, tornando-o mais simples de configurar. É uma boa escolha caso você queira um software de wiki simples, sem todas as complexidades do MediaWiki.</p>
 
 		<h2><u>Instalação</u></h2>
 		<p>Embora DokuWiki esteja disponível nos repositórios do Debian, está desatualizado e utiliza uma estrutura de diretórios diferentes do padrão, o que pode causa incompatibiliade com alguns plugins. Então, vamos instalá-lo por uma tarball.</p>
@@ -83,7 +83,7 @@ chown -R www-data:www-data /var/www/dokuwiki</code>
 
 <code class="codeblock">systemctl restart nginx &amp;&amp; systemctl restart php7.4-fpm</code>
 
-		<p>Finalmente, acesse <em><u>wiki.exemplo.org/install.php</u></em> para finalizar a instalação. Caso queria uma interface em português, vá na opção "Choose your language" e selecione "pt-br". Leia a <a href="https://www.dokuwiki.org/installer">documentação</a> para entender o que cada um desses itens significa.</p>
+		<p>Finalmente, acesse <em><u>wiki.exemplo.org/install.php</u></em> para finalizar a instalação. Caso queira uma interface em português, vá na opção "Choose your language" e selecione "pt-br". Leia a <a href="https://www.dokuwiki.org/installer">documentação</a> para entender o que cada um desses itens significa.</p>
 		<p>Terminando isso, lembre-se de descomentar a linha contendo <code>location</code> no seu arquivo de configuração nginx. Abra <code>/etc/nginx/sites-available/dokuwiki</code> com um editor de texto e remova o "#" no começo da linha:</p>
 
 <code class="codeblock">#Lembre-se de manter a linha abaixo comentada durante a instalacao, e descomenta-la quando finalizar
