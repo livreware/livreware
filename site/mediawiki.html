@@ -15,36 +15,36 @@
 		<h2><u>Instalação</u></h2>
 		<p>Para instalar MediaWiki, vamos primeiro instalar suas dependências e adicionalmente o programa <code>wget</code> para fazer o download do MediaWiki em si. Conecte-se ao seu servidor e rode o seguinte comando:</p>
 
-<code class="codeblock">apt update
+		<pre><code class="codeblock">apt update
 apt upgrade
-apt install imagemagick mariadb-server php php-apcu php-cli php-curl php-fpm php-intl php-json php-mbstring php-mysql php-xml wget</code>
+apt install imagemagick mariadb-server php php-apcu php-cli php-curl php-fpm php-intl php-json php-mbstring php-mysql php-xml wget</code></pre>
 
 		<p>Agora, vamos baixar o MediaWiki.</p>
 		
-<code class="codeblock">wget https://releases.wikimedia.org/mediawiki/1.39/mediawiki-1.39.3.tar.gz</code>
+		<pre><code class="codeblock">wget https://releases.wikimedia.org/mediawiki/1.39/mediawiki-1.39.3.tar.gz</code></pre>
 
 		<p>Vamos extrair o arquivo usando <code>tar</code>, renomear a pasta extraída com <code>mv</code> e configurar suas devidas permissões com <code>chown</code>.</p>
 
-<code class="codeblock">tar -xzf mediawiki-1.39.3.tar.gz -C /var/www/
+		<pre><code class="codeblock">tar -xzf mediawiki-1.39.3.tar.gz -C /var/www/
 mv /var/www/mediawiki-1.39.3 /var/www/mediawiki
-chown -R www-data:www-data /var/www/mediawiki/</code>
+chown -R www-data:www-data /var/www/mediawiki/</code></pre>
 
 		<p>Agora vamos criar um banco de dados, utilizando MariaDB/MySQL. Vamos criar um banco de dados chamado <code><em>my_wiki</em></code> e um usuário chamado <code><em>wikiuser</em></code>. Você pode usar os nomes que quiser, mas lembre deles pois serão necessários depois.</p>
 		
-<code class="codeblock">mysql -u root -p
+		<pre><code class="codeblock">mysql -u root -p
 Enter Password: (digite sua senha do usuário root do mysql, caso não tenha configurado uma senha, basta apertar enter)
 CREATE DATABASE <em>my_wiki</em>;
 CREATE USER '<em>wikiuser</em>'@'localhost' IDENTIFIED BY '<em><u>senha-para-wikiuser</u></em>';
 GRANT ALL PRIVILEGES ON my_wiki.* TO 'wikiuser'@'localhost' WITH GRANT OPTION;
-quit</code>
+quit</code></pre>
 
 		<p>Agora, vamos criar um arquivo de configuração para nginx.</p>
 
-<code class="codeblock">nano /etc/nginx/sites-available/mediawiki</code>
+		<pre><code class="codeblock">nano /etc/nginx/sites-available/mediawiki</code></pre>
 
 <p>Copie e cole as seguintes linhas dentro deste arquivo, baseado nas configurações <a href="https://www.nginx.com/resources/wiki/start/topics/recipes/mediawiki/">daqui</a>. Não esqueça de substituir <em><u>wiki.exemplo.org</u></em> pelo subdomínio que você quer usar.</p>
 
-<code class="codeblock">server {
+		<pre><code class="codeblock">server {
 	listen 80;
 	listen [::]:80;
 	server_name <em><u>wiki.exemplo.org</u></em>;
@@ -95,16 +95,16 @@ quit</code>
 	root /var/www/mediawiki/local;
 	autoindex on;
 	}
-}</code>
+}</code></pre>
 
 		<p>Salve o arquivo e habilite-o.</p>
 
-<code class="codeblock">ln -s /etc/nginx/sites-available/mediawiki /etc/nginx/sites-enabled/
-systemctl restart nginx</code>
+		<pre><code class="codeblock">ln -s /etc/nginx/sites-available/mediawiki /etc/nginx/sites-enabled/
+systemctl restart nginx</code></pre>
 
 		<p>Gere um certificado SSL para o subdomínio.</p>
 
-<code class="codeblock">certbot --nginx</code>
+		<pre><code class="codeblock">certbot --nginx</code></pre>
 
 		<p>Você pode agora acessar <em><u>wiki.exemplo.org</u></em> e continuar a instalação por lá. A Primeira tela vai te pedir para escolher uma linguagem, escolha "pt-br" a menos que queira outra. Ao chegar na seção "Conectar ao banco de dados", aonde pede o nome da base de dados, digite o nome do banco de dados que você criou acima, no meu caso, <code><em>my_wiki</em></code>. Na parte "Conta de usuário para instalação", escreva o nome e senha para o usuário que você criou acima, no meu caso, o usuário é <code><em>wikiuser</em></code>. Sua tela vai ficar mais ou menos assim.</p>
 		<figure>
@@ -113,17 +113,17 @@ systemctl restart nginx</code>
 		<p>Após isso, siga as instruções na tela, clique em "ajuda" caso tenha dúvida. Ao final, clique em "Faça-me mais perguntas" caso queira configurar algumas coisas a mais, ou "Já estou aborrecido, apenas instale a wiki" para usar as configurações padrão.</p>
 		<p>Ao final dessa configuração, você irá baixar um arquivo chamado "LocalSettings.php". Este arquivo contém suas configurações, e deve ser enviado à sua pasta do MediaWiki em seu servidor. A forma mais fácil é com o comando <code>scp</code>. Por exemplo, caso você esteja usando Windows e salvou LocalSettings.php na pasta "Downloads", abra um Prompt de Comando rode esse comando, substituindo pelo seu domínio.</p>
 
-		<code class="codeblock">scp Downloads\LocalSettings.php root@<em><u>exemplo.org</u></em>:/var/www/mediawiki/</code>
+		<pre><code class="codeblock">scp Downloads\LocalSettings.php root@<em><u>exemplo.org</u></em>:/var/www/mediawiki/</code></pre>
 
 		<h2><u>Configurações finais</u></h2>
 		<p>Sua wiki agora está pronta! Os passos a seguir são opcionais, porém recomendo seguí-los para garantir a segurança e estabilidade da sua wiki.<p>
 		<p>Abra o arquivo <code>/var/www/mediawiki/LocalSettings.php</code> com um editor de texto e adicione uma nova linha ao final dele com o seguinte texto, seguindo a recomendação <a href="https://www.nginx.com/resources/wiki/start/topics/recipes/mediawiki/">daqui</a>.</p>
 
-<code class="codeblock">$wgUsePathInfo = True;</code>
+		<pre><code class="codeblock">$wgUsePathInfo = True;</code></pre>
 
 		<p>Para garantir que ninguém possa acessar o script de configuração inicial da wiki e possívelmente reconfigurá-la sem seu conhecimento, vamos desabilitar seu acesso. Abra o arquivo <code>/etc/nginx/sites-available/mediawiki</code> e abaixo do bloco que diz <code>location /dumps</code>, adicione a seguinte linha em negrito. Seu arquivo deve ficar mais ou menos assim:</p>
 
-<code class="codeblock">location /dumps {
+		<pre><code class="codeblock">location /dumps {
 	root /var/www/mediawiki/local;
 	autoindex on;
 	}
@@ -131,11 +131,11 @@ systemctl restart nginx</code>
 location = /mw-config/index.php {
 	deny all;
 	}</strong>
-}</code>
+}</code></pre>
 
 		<p>Salve o arquivo e reinicie o nginx para as configurações terem efeito.</p>
 
-<code class="codeblock">systemctl restart nginx</code>
+		<pre><code class="codeblock">systemctl restart nginx</code></pre>
 
 		<p>A instalação está completa! Agora, basta ler a <a href="https://www.mediawiki.org/wiki/Help:Contents/pt-br">documentação</a> para saber como utilizar sua wiki. Divirta-se!</p>
 

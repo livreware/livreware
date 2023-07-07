@@ -12,27 +12,28 @@
 		<h1><u>Matrix Synapse</u></h1>
 		<p><a href="https://matrix.org/">Matrix</a> é um protocolo de bate-papo privado fácil de usar, descentralizado e criptografado. Matrix é federado, o que significa que com uma conta Matrix em qualquer servidor, inclusive o seu, você pode falar com qualquer outra conta Matrix na internet, semelhante ao e-mail. Matrix também permite bate-papo em grupos totalmente criptografados de ponta a ponta.</p>
 		<p>Synapse é o nome do servidor padrão. Embora exija um pouco mais de recursos do sistma do que um servidor XMPP, ele compensa isso por ser mais fácil de usar.</p>
+
 		<h2><u>Instalação</u></h2>
 		<p>A versão mais recente do Synapse não está nos repositórios do Debian por padrão, mas podemos facilmente adicionar o repositório do Matrix para incluí-lo. Entre em seu servidor e rode os seguintes comandos:</p>
 
-<code class="codeblock">apt install -y apt-transport-https lsb-release wget
+		<pre><code class="codeblock">apt install -y apt-transport-https lsb-release wget
 wget -O /usr/share/keyrings/matrix-org-archive-keyring.gpg https://packages.matrix.org/debian/matrix-org-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/matrix-org-archive-keyring.gpg] https://packages.matrix.org/debian/ $(lsb_release -cs) main" &gt; /etc/apt/sources.list.d/matrix-org.list</code>
+echo "deb [signed-by=/usr/share/keyrings/matrix-org-archive-keyring.gpg] https://packages.matrix.org/debian/ $(lsb_release -cs) main" &gt; /etc/apt/sources.list.d/matrix-org.list</code></pre>
 
 		<p>Depois de atualizarmos nossas listas de pacotes, poderemos instalar o Synapse usando o <code>apt</code>.</p>
 
-<code class="codeblock">apt update
-apt install matrix-synapse-py3</code>
+		<pre><code class="codeblock">apt update
+apt install matrix-synapse-py3</code></pre>
 
 		<p>Quando solicitado, forneça o domínio ou subdomínio onde você quer hospedar o Matrix. Este será o domínio anexado ao seu endereço Matrix, por exemplo "@usuario:matrix.livreware.org".</p>
 		<p>Gere um certificado SSL. Substitua <u><em>matrix.exemplo.org</em></u> para o domínio ou subdomínio que você pretende usar.</p>
 
-<code class="codeblock">certbot certonly --nginx -d <u><em>matrix.exemplo.org</em></u></code>
+		<pre><code class="codeblock">certbot certonly --nginx -d <u><em>matrix.exemplo.org</em></u></code></pre>
 
 		<h2><u>Configuração do Nginx</u></h2>
 		<p>Utilizando um editor de texto, crie um arquivo de configuração Nginx para o Matrix, por exemplo <code>/etc/nginx/sites-available/matrix</code> e adicione o conteúdo abaixo. Substitua <u><em>matrix.exemplo.org</em></u> pelo seu domínio ou subdomínio onde irá hospedar esse serviço.</p>
 
-<code class="codeblock">server {
+		<pre><code class="codeblock">server {
 	server_name <u><em>matrix.exemplo.org</em></u>;
 
         listen 80;
@@ -66,44 +67,44 @@ apt install matrix-synapse-py3</code>
                 default_type application/json;
                 add_header Access-Control-Allow-Origin *;
         }
-}</code>
+}</code></pre>
 
 		<p>Observe a variável <em>client_max_body_size.</em>. Por padrão, o Nginx limita o tamanho dos arquivos que pode transferir. Vamos aumentar isso para 50 megabytes para o Matrix. Caso queria enviar arquivos ainda maiores no seu chat, ajuste o tamanho de acordo. (Tenha em mente, no entanto, que Matrix e Nginx têm configurações separadas para isso e, para aumenta-lo para algo muito maior, você terá que aumentar o valor em ambos os arquivos de configuração.)</p>
 		<p>Salve e feche o arquivo. Agora vamos ativar o serviço Matrix e reiniciar o Nginx.</p>
 
-<code class="codeblock">ln -s /etc/nginx/sites-available/matrix /etc/nginx/sites-enabled/
-systemctl restart nginx</code>
+		<pre><code class="codeblock">ln -s /etc/nginx/sites-available/matrix /etc/nginx/sites-enabled/
+systemctl restart nginx</code></pre>
 
 		<h2><u>Configuração</u></h2>
 		<h3>Configuração do banco de dados</h3>
 		<p>Synapse suporta PostgreSQL como back-end de banco de dados, e recomenda que ele seja usado. Comece instalando o PostgreSQL: </p>
 
-<code class="codeblock">apt install postgresql</code>
+		<pre><code class="codeblock">apt install postgresql</code></pre>
 
 		<p>Em seguida, inicie o programa:</p>
 
-<code class="codeblock">systemctl enable --now postgresql</code>
+		<pre><code class="codeblock">systemctl enable --now postgresql</code></pre>
 
 		<p>Agora crie um usuário chamado "synapse_user" e sua senha para gerenciar seu banco de dados:</p>
 
-<code class="codeblock">su -c "createuser --pwprompt synapse_user" postgres</code>
+		<pre><code class="codeblock">su -c "createuser --pwprompt synapse_user" postgres</code></pre>
 
 		<p>E, finalmente, crie o banco de dados:</p>
 
-<code class="codeblock">su postgres
+		<pre><code class="codeblock">su postgres
 psql -c "CREATE DATABASE synapse ENCODING 'UTF8' LC_COLLATE='C' LC_CTYPE='C' template=template0 OWNER synapse_user;"
-exit</code>
+exit</code></pre>
 
 		<p>Agora edite a configuração do banco de dados em <code>/etc/matrix-synapse/homeserver.yaml</code> e comente as seguintes linhas para desabilitar a configuração SQLite. Seu arquivo deve ficar assim:</p>
 
-<code class="codeblock"># database:
+		<pre><code class="codeblock"># database:
   # name: sqlite3
   # args:
-    # database: DATADIR/homeserver.db</code>
+    # database: DATADIR/homeserver.db</code></pre>
 
 		<p> Em seguida, copie a seguinte configuração e defina as entradas apropriadas: </p>
 
-<code class="codeblock">database:
+		<pre><code class="codeblock">database:
   name: psycopg2
     args:
       user: synapse_user
@@ -111,11 +112,11 @@ exit</code>
       database: synapse
       host: localhost
       cp_min: 5
-      cp_max: 10</code>
+      cp_max: 10</code></pre>
 
 		<p>Altere <em>senha</em> para a senha que você criou para o usuário "synapse_user". Salve e feche o arquivo, ele deve ficar assim no final. Não precisa mexer nas outras linhas</p>
 
-<code class="codeblock"># database:
+		<pre><code class="codeblock"># database:
 # name: sqlite3
   # args:
   # database: /var/lib/matrix-synapse/homeserver.db
@@ -127,33 +128,35 @@ database:
       database: synapse
       host: localhost
       cp_min: 5
-      cp_max: 10</code>
+      cp_max: 10</code></pre>
 
 		<h3>Adicionando usuários e administradores</h3>
 		<p>Antes de configurar o usuário administrador, certifique-se de definir um <code>registration_shared_secret</code> em <code>/etc/matrix-synapse/homeserver.yaml</code>:</p>
 
-<code class="codeblock">registration_shared_secret: ???</code>
+		<pre><code class="codeblock">registration_shared_secret: ???</code></pre>
 
 		<p>Salve e feche o arquivo. Em seguida, reinicie o Synapse e execute o seguinte comando para registrar um usuário:</p>
 
-<code class="codeblock">systemctl restart matrix-synapse
-register_new_matrix_user -c /etc/matrix-synapse/homeserver.yaml</code>
+		<pre><code class="codeblock">systemctl restart matrix-synapse
+register_new_matrix_user -c /etc/matrix-synapse/homeserver.yaml</code></pre>
 
 		<p>Este comando solicitará um nome de usuário, senha e se o usuário deve ser administrador ou não, digite "yes" em "Make admin". Agora seu servidor está pronto! Para usá-lo, baixe um cliente matrix para se conectar. Eu recomendo o <a href="https://element.io/download">Element</a> por ser bem fácil de usar, mas existem <a href="https://matrix.org/clients-matrix/">vários outros</a> pra escolher.</p>
 		<p>Ao abrir o Element, selecione sua linguagem desejada e clique em Fazer Signin. Clique em "Editar" na opção "Servidor Local", e coloque o domínio ou subdomínio que você definiu na sua configuração nginx, como <u><em>matrix.exemplo.org</em></u>. Digite o nome e senha do usuário administrador que foi criado logo acima, e você estará logado em seu servidor Matrix!</p>
 		<h2><u>Configurações extras</u></h2>
 		<p>Aqui estão explicadadas algumas configurações extras que não são necessárias para um servidor simples funcionar, mas que talvez você as queria. Todas essas mudanças devem ser feitas no arquivo <code>/etc/matrix-synapse/homeserver.yaml</code> com um editor de texto. <strong>Lembre-se de rodar o comando <code>systemctl restart matrix-synapse</code> sempre que modificar o arquivo <code>/etc/matrix-synapse/homeserver.yaml</code> para que as mudanças tenham efeito.</strong></p>
+
 		<h3>Registrando usuários</h3>
 		<p>Por padrão, Synapse não permite que usuários registrem contas em seu servidor, um admnistrador deve manualment adicionar usuários com o comando <code>register_new_matrix_user</code>. Isso é para impedir spam. Para permitir que usuários adicionem contas eles mesmos, adicione as seguintes linhas em sua configuração.</p>
 
-<code class="codeblock">enable_registration: true
-enable_registration_without_verification: true</code>
+		<pre><code class="codeblock">enable_registration: true
+enable_registration_without_verification: true</code></pre>
 
 		<p><strong>Isso irá permitir que qualquer um crie uma conta em seu servidor, o que pode resultar em spam</strong>. Para permitir que usuários registrem a si mesmos e controlar possível spam, veja as opções <a href="https://matrix-org.github.io/synapse/latest/usage/configuration/config_documentation.html#enable_registration">listadas aqui</a>. Estou listando a opção de registro sem verificação pois é a mais simples de configurar. Caso queria usar esse servidor para um pequeno grupo de amigos, permita o registro com as linhas acima e depois as delete assim que todos criarem suas contas. Caso pretenda ter um servidor aberto à todos, leia as opções de que ajudam a impedir spam.</p>
+
 		<h3>Visualizações de URL</h3>
 		<p>Para permitir visualizações de páginas da web geradas pelo servidor, adicione as seguintes linhas:</p>
 
-<code class="codeblock">url_preview_enabled: true
+		<pre><code class="codeblock">url_preview_enabled: true
 url_preview_ip_range_blacklist:
   - '127.0.0.0/8'
   - '10.0.0.0/8'
@@ -173,16 +176,17 @@ url_preview_ip_range_blacklist:
   - 'fc00::/7'
   - '2001:db8::/32'
   - 'ff00::/8'
-  - 'fec0::/10'</code>
+  - 'fec0::/10'</code></pre>
 
 		<h3>Federação</h3>
 		<p>Usando a configuração do Nginx fornecida com este guia, a federação deve funcionar imediantamente com o Synapse. Você pode testar se está funcionando usando o <a href="https://federationtester.matrix.org/">Matrix Federation Tester</a>. No entanto, alguns recursos extras podem ser ativados para aumentar a usabilidade do seu servidor com a federeção. Essa linha vai permitir que usuários adicionem seu servidor à uma lista de servidores (em um cliente como o Element) e vejam uma lista de todas as salas públicas hospedadas em seu servidor.</p>
 
-<code class="codeblock">allow_public_rooms_over_federation: true</code>
+		<pre><code class="codeblock">allow_public_rooms_over_federation: true</code></pre>
 
 		<p>Essa linha vai permitir que convidados para o seu servidor vejam as salas públicas hospedadas nele sem autenticação.</p>
 
-<code class="codeblock">allow_public_rooms_without_auth: true</code>
+		<pre><code class="codeblock">allow_public_rooms_without_auth: true</code></pre>
+
 		<footer>
 			<a href="https://landchad.net/matrix/">Adaptado de LandChad.net</a>
 			<hr>

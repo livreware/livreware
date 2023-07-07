@@ -15,46 +15,46 @@
 		<h2><u>Instalação</u></h2>
 		<p> Primeiro, precisamos garantir que nossa arquitetura de CPU seja suportada. Certifique-se de seja amd64, arm64 ou i386. Entre em seu servidor e digite o seguinte comando:</p>
 		
-<code class="codeblock">dpkg --print-architecture</code>
+		<pre><code class="codeblock">dpkg --print-architecture</code></pre>
 
 		<p>Agora, vamos adicionar os repositórios do Tor para podermos ter a versão mais recente do programa:</p>
 
-<code class="codeblock">apt install -y apt-transport-https curl gpg
+		<pre><code class="codeblock">apt install -y apt-transport-https curl gpg
 echo "deb     [signed-by=/usr/share/keyrings/tor-archive-keyring.gpg] https://deb.torproject.org/torproject.org $(lsb_release -cs) main
-deb-src [signed-by=/usr/share/keyrings/tor-archive-keyring.gpg] https://deb.torproject.org/torproject.org $(lsb_release -cs) main" &gt; /etc/apt/sources.list.d/tor.list</code>
+deb-src [signed-by=/usr/share/keyrings/tor-archive-keyring.gpg] https://deb.torproject.org/torproject.org $(lsb_release -cs) main" &gt; /etc/apt/sources.list.d/tor.list</code></pre>
 
 		<p>Vamos então adicionar as chaves GPG do Projeto Tor ao nosso chaveiro:</p>
 
-<code class="codeblock">curl -s https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc | gpg --dearmor &gt; /usr/share/keyrings/tor-archive-keyring.gpg</code>
+		<pre><code class="codeblock">curl -s https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc | gpg --dearmor &gt; /usr/share/keyrings/tor-archive-keyring.gpg</code></pre>
 
 		<p>Finalmente, instalamos o Tor:</p>
 
-<code class="codeblock">apt update
-apt install tor deb.torproject.org-keyring</code>
+		<pre><code class="codeblock">apt update
+apt install tor deb.torproject.org-keyring</code></pre>
 
 		<h2><u>Configuração</u></h2>
 		<p>Abra o arquivo <code>/etc/tor/torrc</code> com um editor de texto e descomente (ou seja, delete os "#" no começo) as seguintes linhas:</p>
 
-<code class="codeblock">HiddenServiceDir /var/lib/tor/hidden_service/
-HiddenServicePort 80 127.0.0.1:80</code>
+		<pre><code class="codeblock">HiddenServiceDir /var/lib/tor/hidden_service/
+HiddenServicePort 80 127.0.0.1:80</code></pre>
 
 		<p>Agora inicie e habilite o Tor para que ele sempre inicie quando o servidor ligar, e reinicie-o caso já estivesse iniciado:</p>
 
-<code class="codeblock">systemctl enable --now tor
-systemctl restart tor</code>
+		<pre><code class="codeblock">systemctl enable --now tor
+systemctl restart tor</code></pre>
 
 		<p>Se este este comando disser "Active" na cor verde, tudo deu certo!</p>
 
-<code class="codeblock">systemctl status tor</code>
+		<pre><code class="codeblock">systemctl status tor</code></pre>
 
 		<p>Seu servidor agora está acessível pela rede Tor. O seguinte comando lhe mostrará o seu endereço .onion, um tipo de endereço especial usado para sites dentro do Tor.</p>
 
-<code class="codeblock">cat /var/lib/tor/hidden_service/hostname</code>
+		<pre><code class="codeblock">cat /var/lib/tor/hidden_service/hostname</code></pre>
 
 		<h2><u>Configuração Nginx</u></h2>
 		<p>A partir daqui, os passos passos são quase idênticos aos de configurar um site normal. Siga os passos de como configurar um site no <a href="basico/nginx.html">tutorial nginx</a>, como se fosse criar um novo site, até o bloco de código que começa com <code>server { ...</code> e ao invés de copiar o que está lá, copie e cole isso:</p>
 
-<code class="codeblock">server { 
+		<pre><code class="codeblock">server { 
 	listen 127.0.0.1:80 ;
 	server_name <em><u>seu-endereco-onion.onion</u></em> ;
 	root /var/www/<em><u>meusite</u></em> ;
@@ -62,7 +62,7 @@ systemctl restart tor</code>
 	location / {
 		try_files $uri $uri/ =404 ;
 	}
-}</code>
+}</code></pre>
 
 		<p>A linha <code>server_name</code> deve conter o endereço que foi mostrando pelo comando <code>cat</code> acima</p>
 		<p>A linha <code>root</code> deve conter a pasta com os arquivos do site. Se já tem um site normal e quer espelhá-lo na rede Tor, basta colocar a mesma pasta onde ele está. Por exemplo, se seu site normal está na pasta <code>/var/www/meusite</code>, escreva essa mesma pasta na linha <code>root</code>.</p>
@@ -71,10 +71,11 @@ systemctl restart tor</code>
 
 		<h2><u>Aunciando seu site .onion</u></h2>
 		<p>Caso esteja espelhando um site na rede Tor, você pode adicionar a seguinte linha na configuração nginx do seu site. Por exemplo, se o arquivo de configuração está em <code>/etc/nginx/sites-available/meusite</code>, abra esse arquivo e adicione isso:</p>
-<code class="codeblock">server {
+
+		<pre><code class="codeblock">server {
 	...
 	add_header Onion-Location http://<em><u>seu-endereco-onion.onion</u></em>$request_uri ;
-}</code>
+}</code></pre>
 
 		<p>Somente adicione a linha <code>add_header</code> dentro do bloco <code>server { ... }</code>, não precisa mexer no resto das linhas.</p>
 		<p>A linha <code>add_header</code> vai fazer com que qualquer um acessando seu site usando o <a href="https://www.torproject.org/pt-BR/download/">Navegador Tor</a> veja uma opção que diz ".onion disponível" na barra de endereço. Clicando nela, você será levado ao site via a rede Tor.</p>
@@ -83,7 +84,7 @@ systemctl restart tor</code>
 		<h2><u>Atualize frequentemente!</u></h2>
 		<p>Por ser uma rede focada em segurança e privacidade, o software Tor recebe atualizações constantes. Rode os seguintes comandos com frequência para atualizar o Tor e seu sistema como um todo.</p>
 
-<code class="codeblock">apt update &amp;&amp; apt upgrade</code>
+		<pre><code class="codeblock">apt update &amp;&amp; apt upgrade</code></pre>
 
 		<p><strong>Observação</strong>: Você não precisa de um certificado SSL para seu site .onion. HTTP via Tor já é bem seguro.</p>
 		<p>Seu site agora está disponível na rede Tor! Você pode acessá-lo com o <a href="https://www.torproject.org/pt-BR/download/">Navegador Tor</a> colocando <code><em><u>seu-endereço-onion.onion</u></em></code> na barra de endereço, ou acessando seu site normal e clicando na opção ".onion disponível", também na barra de endereço.</p>

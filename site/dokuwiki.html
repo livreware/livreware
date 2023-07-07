@@ -16,20 +16,20 @@
 		<p>Embora DokuWiki esteja disponível nos repositórios do Debian, está desatualizado e utiliza uma estrutura de diretórios diferentes do padrão, o que pode causa incompatibiliade com alguns plugins. Então, vamos instalá-lo por uma tarball.</p>
 		<p>Primeiro, instale as dependências:</p>
 
-<code class="codeblock">apt install nginx php php-fpm php-xml php-mbstring php-zip php-intl php-gd wget</code>
+		<pre><code class="codeblock">apt install nginx php php-fpm php-xml php-mbstring php-zip php-intl php-gd wget</code></pre>
 
 		<p>Agora, baixe a tarball com <code>wget</code>, extraia o arquivo com <code>tar</code>, remove a tarball com <code>rm</code>, mova a pasta para o lugar certo com <code>mv</code>, e configure as devidas permissões com <code>chown</code>.</p>
 
-<code class="codeblock">wget https://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz
+		<pre><code class="codeblock">wget https://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz
 tar xzvf dokuwiki-stable.tgz
 rm dokuwiki-stable.tgz
 mv dokuwiki-* /var/www/dokuwiki
-chown -R www-data:www-data /var/www/dokuwiki</code>
+chown -R www-data:www-data /var/www/dokuwiki</code></pre>
 
 		<h2><u>Configuração Nginx</u></h2>
 		<p>Crie um arquvio chamado <code>/etc/nginx/sites-available/dokuwiki</code> com seu editor de texto favorito e adicione as seguintes linhas, que foram baseadas na configuração <a href="https://www.dokuwiki.org/install:nginx">daqui</a>. <strong>Lembre-se de trocar <em><u>wiki.exemplo.org</u></em> pelo nome do seu site ou subdomínio.</strong> Preste atenção também na linha que diz <code>client_max_body_size</code>, que determina o tamnho máximo de arquivo permitido para uploads, e a primeira linha que diz <code>location</code>, pois ela deve estar comentada durante a instalação, e descomentada quando a instalação for finalizada.<p>
 
-<code class="codeblock">server {
+		<pre><code class="codeblock">server {
     listen 80;
     listen [::]:80;
     server_name wiki.exemplo.org;
@@ -69,29 +69,29 @@ chown -R www-data:www-data /var/www/dokuwiki</code>
         fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
         # fastcgi_pass unix:/var/run/php5-fpm.sock; #versao antiga de php
     }
-}</code>
+}</code></pre>
 
 		<p>Habilite o site:</p>
 
-<code class="codeblock">ln -s /etc/nginx/sites-available/dokuwiki /etc/nginx/sites-enabled/</code>
+		<pre><code class="codeblock">ln -s /etc/nginx/sites-available/dokuwiki /etc/nginx/sites-enabled/</code></pre>
 
 		<p>Gere um certificado SSL para o subdomínio:</p>
 
-<code class="codeblock">certbot --nginx</code>
+		<pre><code class="codeblock">certbot --nginx</code></pre>
 
 		<p>Reinicie o nginx e php para que as mudanças tomem efeito:</p>
 
-<code class="codeblock">systemctl restart nginx &amp;&amp; systemctl restart php7.4-fpm</code>
+		<pre><code class="codeblock">systemctl restart nginx &amp;&amp; systemctl restart php7.4-fpm</code></pre>
 
 		<p>Finalmente, acesse <em><u>wiki.exemplo.org/install.php</u></em> para finalizar a instalação. Caso queira uma interface em português, vá na opção "Choose your language" e selecione "pt-br". Leia a <a href="https://www.dokuwiki.org/installer">documentação</a> para entender o que cada um desses itens significa.</p>
 		<p>Terminando isso, lembre-se de descomentar a linha contendo <code>location</code> no seu arquivo de configuração nginx. Abra <code>/etc/nginx/sites-available/dokuwiki</code> com um editor de texto e remova o "#" no começo da linha:</p>
 
-<code class="codeblock">#Lembre-se de manter a linha abaixo comentada durante a instalacao, e descomenta-la quando finalizar
-location ~ /(conf/|bin/|inc/|vendor/|install.php) { deny all; }</code>
+		<pre><code class="codeblock">#Lembre-se de manter a linha abaixo comentada durante a instalacao, e descomenta-la quando finalizar
+location ~ /(conf/|bin/|inc/|vendor/|install.php) { deny all; }</code></pre>
 
 		<p>Reinicine nginx mais uma vez para as mudanças ocorrerem:</p>
 
-<code class="codeblock">systemctl restart nginx</code>
+		<pre><code class="codeblock">systemctl restart nginx</code></pre>
 
 		<p>Sua wiki agora está online! Divirta-se, e <em>happy hacking</em>.</p>
 

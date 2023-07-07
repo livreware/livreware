@@ -19,6 +19,9 @@ code {
 	display: block;
 	text-align: left;
 	padding: 10px;
+}
+
+pre {
 	white-space: pre-wrap;
 }
 

@@ -17,7 +17,7 @@
 		<p>Primeiramente, precisamos logar na VPS para configurar o webserver. Se você estiver usando MacOS ou Linux, basta abrir um terminal. Caso estiver usando windows, você pode usar o prompt de comando, <a href="https://putty.org/">PuTTY</a>, ou Windows Subsystem for Linux. O prompt de comando é o mais simples, basta clicar na barra de pesquisa do Windows e pesquisar “prompt” para ele aparecer.</p>
 		<p>Para conectar, digite o seguinte comando no seu terminal/prompt de comando, onde <code>exemplo.org</code> é o seu domínio.</p>
 
-<code class="codeblock">ssh root@<u><em>exemplo.org</em></u></code>
+		<pre><code class="codeblock">ssh root@<u><em>exemplo.org</em></u></code></pre>
 
 		<p>Esse comando vai tentar conectar ao seu servidor e vai pedir uma senha, a mesma senha que você escolheu quando você <a href="servidor.html">configurou seu servidor</a>. Caso você tenha esquecido sua senha, você pode definir uma nova senha. Clique em “Gerenciar” no servidor que você quer mudar -&gt; Acesso SSH -&gt; Senha SSH - Alterar.</p>
 		<figure>
@@ -27,17 +27,17 @@
 		<h2><u>Instalando o webserver: Nginx</u></h2>
 		<p>Se o comando foi executado sem problemas, você agora está logado no seu servidor! Vamos agora executar os seguintes comandos.</p>
 
-<code class="codeblock">apt update
+<pre><code class="codeblock">apt update
 apt upgrade
 systemctl reboot
-apt install nginx</code>
+apt install nginx</code></pre>
 
 		<p><code>apt</code> é o programa que instala e remove software em Debian. O primeiro comando verifica se há alguma atualização disponível para o seu sistema. O segundo, aplica as atualizações caso existam. O terceiro reinicia o servidor para terminar as atualizações, ele voltará online rápidamente. Na maioria dos casos, não é necessário reiniciar o servidor para finalizar as atualizações, mas é bom fazê-lo quando vários programas são atualizados de uma vez, com o tempo, você vai aprender quando deve ou não reiniciar depois de uma atualização. O quarto comando instala nosso webserver, Nginx (pronunciado Engine-X).</p>
 		<p>Seu servidor talvez já tenha outro webserver habilitado, provávelmente Apache, como é o caso da Hostinger. Nós não o utilizaremos, então podemos desabilitá-lo e opcionalmente desinstalá-lo. É necessário desabilitá-lo pois não podem haver dois webservers rodando ao mesmo tempo.</p>
 
-<code class="codeblock">systemctl stop apache2
+<pre><code class="codeblock">systemctl stop apache2
 systemctl disable apache2
-apt remove apache2 apache2-bin apache2-data apache2-doc apache2-utils</code>
+apt remove apache2 apache2-bin apache2-data apache2-doc apache2-utils</code></pre>
 
 		<p>O primeiro e segundo comandos o desabilita, o terceiro desinstala.</p>
 		<h3>Arquivo de configuração Nginx</h3>
@@ -46,13 +46,13 @@ apt remove apache2 apache2-bin apache2-data apache2-doc apache2-utils</code>
 		<p>Primeiro, vamos escrever as configurações do nosso site. Você pode copiar e colar os comandos a seguir (com as devidas modificações), mas eu vou explicar o que cada linha significa.</p>
 		<p>Crie um arquivo em <code>/etc/nginx/sites-available</code> assim:</p>
 
-<code class="codeblock">nano /etc/nginx/sites-available/<u><em>meusite</em></u></code>
+		<pre><code class="codeblock">nano /etc/nginx/sites-available/<u><em>meusite</em></u></code></pre>
 
 		<p><code>nano</code> é um programa chamado de editor de texto, ele simplesmente te permite editar arquivos de texto no seu sistema, semelhante ao bloco de notas/notepad no Windows. Note que eu nomeei o arquivo <code>meusite</code>, mas você pode usar o nome que quiser.</p> 
 		<p>Agora, vamos adicionar o seguinte conteúdo ao arquivo, palavras que forem <u><em>escritas assim</em></u> vão ser diferentes para você, dependendo de como você quer chamar seu site.</p>
 		<p>Para salvar o arquivo, digite <code>Control + S</code>, para fechá-lo, <code>Control + X</code>.</p>
 
-<code class="codeblock">server { 
+<pre><code class="codeblock">server { 
 	listen 80 ;
 	listen [::]:80 ;
 	server_name <u><em>exemplo.org</em></u> ;
@@ -61,7 +61,7 @@ apt remove apache2 apache2-bin apache2-data apache2-doc apache2-utils</code>
 	location / {
 		try_files $uri $uri/ =404 ;
 	}
-}</code>
+}</code></pre>
 
 		<h3><u>Explicação dessas linhas</u></h3>
 		<p>A opção <code>listen</code> define que o webserver vai receber, ou “ouvir”, por conexões na porta 80 para endereços IPv4 e IPv6 respectivamente.</p>
@@ -72,35 +72,35 @@ apt remove apache2 apache2-bin apache2-data apache2-doc apache2-utils</code>
 		<h3><u>Criando a pasta e o index do site</u></h3>
 		<p>Vamos criar uma página inicial simples para o seu site. Primeiro, vamos criar a pasta que foi definida no arquivo acima, utilizando o comando <code>mkdir</code>.</p>
 
-<code class="codeblock">mkdir /var/www/<u><em>meusite</em></u></code>
+		<pre><code class="codeblock">mkdir /var/www/<u><em>meusite</em></u></code></pre>
 
 		<p>Agora vamos criar o arquivo index.html que vai aparecer quando o site for acessado.</p>
 
-<code class="codeblock">nano /var/www/<u><em>meusite</em></u>/index.html</code>
+		<pre><code class="codeblock">nano /var/www/<u><em>meusite</em></u>/index.html</code></pre>
 
 		<p>Eu vou adicionar o seguinte conteúdo, mas você pode adicionar o que quiser, contanto que seja HTML válido. Isso é o que vai aparecer no seu site.</p>
 
-<code class="codeblock">&lt;!DOCTYPE html&gt;
+<pre><code class="codeblock">&lt;!DOCTYPE html&gt;
 &lt;h1&gt;Meu website!&lt;/h1&gt;
-&lt;p&gt;Bem-vindo ao meu site. Obrigado pela visita!&lt;/p&gt;</code>
+&lt;p&gt;Bem-vindo ao meu site. Obrigado pela visita!&lt;/p&gt;</code></pre>
 
 		<h3><u>Habilite o site</u></h3>
 		<p>Quando tiver salvado esse arquivo, você pode habilitá-lo criando un link para a pasta <code>sites-enabled</code>:</p>
 
-<code class="codeblock">ln -s /etc/nginx/sites-available/<u><em>meusite</em></u> /etc/nginx/sites-enabled/</code>
+		<pre><code class="codeblock">ln -s /etc/nginx/sites-available/<u><em>meusite</em></u> /etc/nginx/sites-enabled/</code></pre>
 
 		<p>Agora, reinicie <code>nginx</code> para as mudanças tomarem efeito:</p>
 
-<code class="codeblock">systemctl restart nginx</code>
+		<pre><code class="codeblock">systemctl restart nginx</code></pre>
 
 		<h2><u>Firewall</u></h2>
 		<p>Algumas VPSes vem com o firewall <code>ufw</code> instalado por padrão, outras não. De qualquer forma, eu recomendo usá-lo.</p>
 
-<code class="codeblock">apt install ufw
+<pre><code class="codeblock">apt install ufw
 ufw allow ssh
 ufw allow 80
 ufw allow 443
-ufw enable</code>
+ufw enable</code></pre>
 
 		<p>A primeira linha instala o programa. A segunda, terceira e quarta linha abrem as portas necessários para o acesso SSH e para seu site funcionar. A quinta linha habilita o firewall. <strong>É importante rodar o comando <code>ufw allow ssh</code> antes de <code>ufw enable</code>, pois caso o firewall não esteja configurado pra aceitar conexões SSH, você será deconectado e impedido de conectar de novo ao servidor</strong>. Conforme você vai instalando novos serviços no seu servidor, você precisará abrir mais portas, porém isso será mencionado nos seus respectivos artigos, por enquanto essas são as únicas configurações necessárias.</p>
 		
