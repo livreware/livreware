@@ -17,7 +17,7 @@
 
 		<pre><code class="codeblock">apt install mariadb-server php php-{fpm,bcmath,bz2,intl,gd,mbstring,mysql,zip,xml,curl} wget</code></pre>
 
-		<p><em>Opcionalmente,</em> você pode melhorar o desempenho do seu servidor Nextcloud ajustando os processos filhos que são usados para executar scripts PHP. Dessa forma, mais scripts PHP podem ser executados de uma só vez. Abra o arquivo <code>/etc/php/8.2/fpm/pool.d/www.conf</code> com um editor de texto:</p>
+		<p><em>Opcionalmente,</em> você pode melhorar o desempenho do seu servidor Nextcloud ajustando os processos filhos que são usados para executar scripts PHP. Dessa forma, mais scripts PHP podem ser executados de uma só vez. Dependendo de quanta memória e poder de processamento seu servidor tem, você pode aumentar ou diminuir esses valores. Caso seu servidor seja mais modesto, recomendo deixar os valores padrões. Caso queira modificá-los, abra o arquivo <code>/etc/php/8.2/fpm/pool.d/www.conf</code> com um editor de texto:</p>
 		
 		<pre><code class="codeblock">nano /etc/php/8.2/fpm/pool.d/www.conf</code></pre>
 
