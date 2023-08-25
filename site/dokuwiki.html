@@ -81,7 +81,7 @@ chown -R www-data:www-data /var/www/dokuwiki</code></pre>
 
 		<p>Reinicie o nginx e php para que as mudanças tomem efeito:</p>
 
-		<pre><code class="codeblock">systemctl restart nginx &amp;&amp; systemctl restart php7.4-fpm</code></pre>
+		<pre><code class="codeblock">systemctl restart nginx &amp;&amp; systemctl restart php8.2-fpm</code></pre>
 
 		<p>Finalmente, acesse <em><u>wiki.exemplo.org/install.php</u></em> para finalizar a instalação. Caso queira uma interface em português, vá na opção "Choose your language" e selecione "pt-br". Leia a <a href="https://www.dokuwiki.org/installer">documentação</a> para entender o que cada um desses itens significa.</p>
 		<p>Terminando isso, lembre-se de descomentar a linha contendo <code>location</code> no seu arquivo de configuração nginx. Abra <code>/etc/nginx/sites-available/dokuwiki</code> com um editor de texto e remova o "#" no começo da linha:</p>
