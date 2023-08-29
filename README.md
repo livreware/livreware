@@ -2,7 +2,7 @@
 
 Um site dedicado a fornecer tutoriais em português ensinando como se ter um próprio site e instalar serviços de software livre. Inspirado por [LandChad.net](https://landchad.net/) ([GitHub](https://github.com/lukesmithxyz/landchad)).
 
-Sugestões são bem-vindas.
+Sugestões, correções, ou qualquer outra ajuda é bem-vinda! Você pode adicionar um link ao final da página do artigo como crédito de autoria por sua colaboração.
 
 ## Regras de envios
 - Artigos devem ser escritos em HTML e CSS apenas. Sem javascript ou frameworks (ex. Bootstrap).
@@ -15,4 +15,4 @@ Sugestões são bem-vindas.
 - Não adicione tutoriais de Docker.
 
 ## Licença
-Qualquer coisa que você adicione ao site ficará sujeito a uma licença [CC-BY-SA](https://creativecommons.org/licenses/by-sa/4.0/deed.pt_BR). Você é livre para adicionar um link pessoal no final do artigo que você escreveu como crédito de autoria.
+Qualquer coisa que você adicione ao site ficará sujeito a uma licença [CC-BY-SA](https://creativecommons.org/licenses/by-sa/4.0/deed.pt_BR).
