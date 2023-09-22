@@ -13,27 +13,58 @@
 		<p>Após conseguir um <a href="dominio.html">domínio</a>, você vai precisar de um servidor para hospedar seu site. Em geral, um servidor apenas é um computador que está constantemente disponibilizando algum serviço para a internet.</p>
 		<p>Servidores podem ser extremamente úteis mesmo sem um site configurado neles. Você pode usá-los para ter seu próprio site, serviço de email, compartilhamento de arquivos e muito mais.</p>
 
-		<h2>Obtendo uma VPS</h2>
+		<h2><u>Obtendo uma VPS</u></h2>
 		<p>Uma VPS, ou "Virtual private server (servidor virtual privado)", é uma forma rápida e barata de conseguir um servidor, sem precisar comprar equipamento caro. Existem várias empresas com quantidades enormes de servidores e uma ótima conexão à internet que te permitem alugar uma VPS por pouco dinheiro.</p>
 		<p>Por isso, você pode hospedar várias coisas em uma única VPS, até mesmo nas mais baratas.</p>
-		<p>Para esse guia, irei usar a Hostinger novamente, pois eles também oferecem VPSes, mas você pode usar qualquer outra empresa que desejar. <u>Seu domínio e servidor não precisam estar na mesma empresa para funcionarem</u>, você pode ter um domínio em uma empresa e um servidor em outra, e eles vão funcionar do mesmo jeito. Só estou usando a Hostinger por conveniência de ter o domínio e servidor no mesmo lugar. <a href="https://www.vultr.com/">Vultr</a> é uma boa alternativa à Hostinger.</p>
+		<p>Para esse guia, irei usar a Vultr, mas você pode usar qualquer outra empresa que desejar. Elas vão fazer básicamente o mesmo que a Vultr faz, mas talvez terão preços e menus diferentes. <u>Seu domínio e servidor não precisam estar na mesma empresa para funcionarem</u>, você pode ter um domínio em uma empresa e um servidor em outra, e eles vão funcionar do mesmo jeito. Você pode usar meu <a href="https://www.vultr.com/?ref=9543143-8H">link de referência</a> da Vultr para começar. Ele te dá 100 dólares de créditos pra usar por 14 dias, então você pode experimentar os serviços deles.</p>
+		<p>A interface do site é em inglês, então eu vou traduzir as partes mais importantes aqui, mas você pode usar um tradutor pra navegar melhor o site se assim desejar.</p>
 		
 		<h2><u>Inciando um servidor</u></h2>
-		<p>Cria uma conta ou faça login na Hostinger e clique na opção que diz "VPS" na barra superior.</p>
+		<p>Cria uma conta na <a href="https://www.vultr.com/?ref=9543143-8H">Vultr</a> para começar. Clique no link e anterior e depois clique em "Sign up", no topo da tela. Digite seu e-mail e senha, e resolva o CAPTCHA.</p>
+		<p>Após criar sua conta, você será levado para uma tela assim:</p>
 		<figure>
-			<a href="../img/barra.png"><img src="../img/barra.png" alt="Opção 'VPS' na interface, sublinhada em vermelho"></a>
+			<a href="../img/cartao.png"><img src="../img/cartao.png" width=450 alt="Detalhes de cartão de crédito"></a>
 		</figure>
-		<p>Selecione a opção mais barata, caso você precise de algo mais poderoso no futuro, é fácil de fazer a mudança. Comece simples e barato, avance se necessário.</p>
+		<p>Vultr requer que você adicione um cartão de crédito antes de pode usar os créditos que você ganhou com o link. Os campos que você deve preencher são:</p>
+		<ul>
+			<li>Your name - Seu nome</li>
+			<li>Billing Address - Seu endereço</li>
+			<li>Billing City - Sua cidade</li>
+			<li>Country/Region - Seu país</li>
+			<li>Billing postal code - Seu CEP</li>
+			<li>Card Number - Número do cartão</li>
+			<li>MM/YY - Mês e ano de validade do cartão</li>
+			<li>CVV - Código de segurança de três dígitos do cartão</li>
+		</ul>
+		<p>Depois, basta clicar em "I just want to link my credit card", "I agree to the terms of service" e "Link credit card" para adiconar o cartão.</p>
+		<p>Caso a Vultr encha o saco e mostre esse erro:</p>
 		<figure>
-			<a href="../img/vps.png"><img src="../img/vps.png" alt="Plano de VPS chamado 'VPS Server Plan 1', custando 39.99R$ por mês sem o desconto"></a>
+			<a href="../img/erro.png"><img src="../img/erro.png" alt="Erro: Linking denied for this card. Please deposit an amount of $5 or greater."></a>
 		</figure>
-		<p>Faça o pagamento e aguarde que seja confirmado, você receberá um email quando houver a confirmação. Você pode acompanhar seus pagamentos na aba "Faturas". Após confirmado, você verá uma opção de configurar seu servidor.</p>
-		<p>Para a localização, escolha a que fica mais próxima da sua audiência, porém isso não importa muito, pois mesmo que seu servidor fique no Brasil, por exemplo, alguém se conectando dos Estados Unidos não vai demorar muito para estabelecer uma conexão.</p>
-		<p>Quando perguntar sobre o sistema operacional, eu prefiro escolher "SO puro", pois assim você tem uma base simples e flexível para operar seu servidor. Eu também recomendo Debian como seu sistema operacional, por ser fácil de usar e extremamente estável. Todos os guias nesse site serão escritos com base em Debian, outros sistemas talvez funcionem um pouco diferente.</p>
+		<p>Significa que você precisa adicionar um depósito de 5 dólares ou mais para adicionar o cartão. Para fazer isso, na seção que diz "Choose Amount", ao invés de selecionar "I just want to link my credit card", Selecione "Other" e digite 5 para adicionar uma cobrança de 5 dólares no seu cartão.</p>
+		<p>Após fazer isso, acesse seu e-mail e clique em um link de verificação que a Vultr te enviou para verificar sua conta.</p>
+		<p>Em seguida, você deverá ver uma tela assim. Caso não seja redirecionado automaticamente, clique em "Deploy" ou "Products".</p>
 		<figure>
-			<a href="../img/nome-senha.png"><img src="../img/nome-senha.png" alt="Configuração de uma VPS, mostrando a definição de um hostname, senha e chave SSH" width=750></a>
-		</figure> 
-		<p>Para o nome e senha, escolha o que quiser, mas escolha uma senha boa. Recomendo gerar uma senha forte e armazená-la com um gerenciador de senhas como <a href="https://keepassxc.org/">KeePassXC</a>. Uma chave SSH é uma forma ainda mais segura e conveniente de acessar o seu servidor, mas essa configuração será explicada em outro artigo, por enquanto não é necessária.</p>
+			<a href="../img/deploy.png"><img src="../img/deploy.png" alt="Página de escolha de servidor da Vultr"></a>
+		</figure>
+		<p>Como esse é um guia para iniciantes, vamos começar selecionando uma opção barata. Caso você precise de algo mais poderoso no futuro, é fácil de fazer a mudança. Comece simples e barato, avance se necessário.</p>
+		<p>Selecione as seguintes opções para seu servidor:</p>
+		<ul>
+			<li>Em "Choose server", escolha "Cloud Compute"</li>
+			<li>Em "CPU &amp; Storage Technology", escolha "Intel Regular Performance"</li>
+			<li>Em "Server location", escolha "New York (NJ)". A localização do seus servidor não importa muito, embora seja desejável escolher um servidor mais próximo da sua audiência, um servidor nos Estados Unidos para usuários brasileiros, por exemplo, não vai demorar muito pra ser acessado.</li>
+			<li>Em "Server Image", escolha "Debian". Debian é um sistema bem estável, perfeito para servidores. Por isso, todos os guias nesse site serão feitos com Debian em mente. Outros sistemas também funcionam, mas talvez precisem ter as instruções adaptadas para eles.</li>
+			<li>Em "Server Size", escolha a opção mais barata que não seja "IPv6 Only". Atualmente, no dia em que eu estou escrevendo isso (21/09/2023), a opção mais barata é nos servidores em New York (NJ), com o preço de $3,50 dólares por mês.</li>
+		</ul>
+		<figure>
+			<a href="../img/vps.png"><img src="../img/vps.png" alt="Opção de VPS custando $3,50 ao mês"></a>
+		</figure>
+		<ul>
+			<li>A seção "Add Auto Backups" te permite adicionar backups automáticos do seu servidor por um pequeno preço a mais, podendo assim recuperá-lo fácilmente caso algum desastre aconteça. A escolha é sua caso queira pagar por isso ou não.</li>
+			<li>Em "Additional Features", habilite "Enable IPv6". Os outros itens são opcionais</li>
+			<li>Finalmente, em "Server Hostname &amp; Label", escolha um nome para seu servidor. Um "hostname" é o nome que você vai ver quando se conectar ao servidor e uma "label" é só como ele vai aparecer no site da Vultr. Pode coloar o mesmo nome em ambas as caixas</li>
+		</ul>
+		<p>Clique em "Deploy Now" para realizar o pagamento e aguarde que seja confirmado, você receberá um email quando houver a confirmação. Após confirmado, você verá seu servidor na sua página principal.</p>
 		
 		<h2><u>Feito!</u></h2>
 		<p>Após concluído isso, seu servidor será automáticamente configurado e estará funcionando em pouco minutos. Nas configurações do seu servidor, você poderá ver seu endereço de IP, que será necessário para o próximo passo.</p>
@@ -42,7 +73,7 @@
 		<h2><a href="dominio.html">&lt;- Anterior: Obtendo um domínio</a></h2>
 
 		<footer>
-			<a href="https://landchad.net/basic/domain/">Adaptado de LandChad.net</a>
+			<a href="https://landchad.net/basic/server/">Adaptado de LandChad.net</a>
 			<hr>
 			<a href="../index.html">De volta ao início</a>
 		</footer>
