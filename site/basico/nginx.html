@@ -19,10 +19,7 @@
 
 		<pre><code class="codeblock">ssh root@<u><em>exemplo.org</em></u></code></pre>
 
-		<p>Esse comando vai tentar conectar ao seu servidor e vai pedir uma senha, a mesma senha que você escolheu quando você <a href="servidor.html">configurou seu servidor</a>. Caso você tenha esquecido sua senha, você pode definir uma nova senha. Clique em “Gerenciar” no servidor que você quer mudar -&gt; Acesso SSH -&gt; Senha SSH - Alterar.</p>
-		<figure>
-			<a href="../img/alterar-senha.png"><img src="../img/alterar-senha.png" alt="Página de configuração de uma VPS, mostrando a seção Acesso SSH" width=700></a>
-		</figure>
+		<p>Esse comando vai tentar conectar ao seu servidor e vai pedir uma senha. Na Vultr, você pode ver essa senha clicando no seu servidor e olhando na opção "Password".</p>
 		<p>Caso o comando acima dê problema, talvez haja um problema nas suas <a href="dns.html">configurações de DNS</a>. Revise-as novamente. Você também pode substituir <code>exemplo.org</code> pelo IP do servidor, mas você vai precisar consertar seu DNS alguma hora.</p>
 		<h2><u>Instalando o webserver: Nginx</u></h2>
 		<p>Se o comando foi executado sem problemas, você agora está logado no seu servidor! Vamos agora executar os seguintes comandos.</p>
@@ -33,7 +30,7 @@ systemctl reboot
 apt install nginx</code></pre>
 
 		<p><code>apt</code> é o programa que instala e remove software em Debian. O primeiro comando verifica se há alguma atualização disponível para o seu sistema. O segundo, aplica as atualizações caso existam. O terceiro reinicia o servidor para terminar as atualizações, ele voltará online rápidamente. Na maioria dos casos, não é necessário reiniciar o servidor para finalizar as atualizações, mas é bom fazê-lo quando vários programas são atualizados de uma vez, com o tempo, você vai aprender quando deve ou não reiniciar depois de uma atualização. O quarto comando instala nosso webserver, Nginx (pronunciado Engine-X).</p>
-		<p>Seu servidor talvez já tenha outro webserver habilitado, provávelmente Apache, como é o caso da Hostinger. Nós não o utilizaremos, então podemos desabilitá-lo e opcionalmente desinstalá-lo. É necessário desabilitá-lo pois não podem haver dois webservers rodando ao mesmo tempo.</p>
+		<p>Seu servidor talvez já tenha outro webserver habilitado, provávelmente Apache. A Vultr não instala nenhum webserver por padrão, mas outras empresas talvez o façam. Como vamos usar nginx, então podemos desabilitá-lo e opcionalmente desinstalá-lo. É necessário desabilitá-lo pois não podem haver dois webservers rodando ao mesmo tempo. As instruções abaixo são para o Apache, modifique-as caso tenha outro webserver instalado por padrão.</p>
 
 <pre><code class="codeblock">systemctl stop apache2
 systemctl disable apache2
