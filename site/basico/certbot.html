@@ -15,7 +15,7 @@
 
 		<h2><u>Porque criptografia é importante?</u></h2>
 		<ul>
-			<li>Com HTTPS, provedores de internet não podem espionar quais páginas em específico uma pessoa acessou em um site, embora eles ainda saiba que ela acessou aquele site. Por exemplo, seu provedor sabe que você se conectou a <code>livreware.org</code>, mas ele não sabe que você viu a página <code>livreware.org/certbot.html</code>.</li>
+			<li>Com HTTPS, provedores de internet não podem espionar quais páginas em específico uma pessoa acessou em um site, embora eles ainda saiba que ela acessou aquele site. Por exemplo, seu provedor sabe que você se conectou a <code>livreware.org</code>, mas ele não sabe que você viu a página <code>livreware.org/basico/certbot.html</code>.</li>
 			<li>Se no futuro você criar contas e senhas no seu site, a falta de criptografia vai transmitir essas informações sem proteção nenhuma! Deixando seu site vulnerável a vazamentos de informação sensível! Muitos programas até bloqueiam a transmissão de informação sem um canal criptografado.</li>
 			<li>Ferramentas de busca como Google favorecem páginas com criptografia mais do que páginas sem.</li>
 			<li>Você ganha um cadeado bonitinho na barra de endereço quando visitar seu site.</li>
@@ -59,7 +59,7 @@ ufw allow 443</code></pre>
 
 		<pre><code class="codeblock">crontab -e</code></pre>
 
-		<p>Talvez apareça um meno perguntando qual editor de texto você quer usar. Caso não saiba usar <code>vim</code>, escolha <code>nano</code>, a primeira opção.
+		<p>Talvez apareça um menu perguntando qual editor de texto você quer usar. Caso não saiba usar <code>vim</code>, escolha <code>nano</code>, a primeira opção.
 		<p>O comando <code>crontab</code> irá abrir um arquivo que você pode editar. Uma crontab é uma lista de comandos que o computador vai realizar automaticamente em certas horas. Nós vamos usar isso para que o servidor tente renovar os certificados todos os meses, para que você não precise fazer manualmente.</p>
 		<p>Crie uma nova linha no final do documento e escreva o seguinte:</p>
 
