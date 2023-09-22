@@ -14,13 +14,13 @@
 		<p>Nós vamos pegar o endereço IPv4/IPv6 e colocá-los nos registros A/AAAA de DNS.</p>
 
 		<h2><u>Abra seu registrador</u></h2>
-		<p>Como estamos usando a Hostinger tanto como registrador como provedor de VPS, a configuração fica um pouco mais simples. Caso esteja usando algo diferente, adapte as instruções de acordo com sua necessidade. Na Hostinger, clique em "Gerenciar" no domínio que você quer configurar, e em seguida clique em "DNS/Nameservers". Essa é a tela que você deve ver. Talvez hajam outros registros de DNS presentes, você pode deletá-los se quiser para deixar tudo mais limpo e organizado, eles não são necessários.</p>
+		<p>Na Hostinger, clique em "Gerenciar" no domínio que você quer configurar, e em seguida clique em "DNS/Nameservers". Essa é a tela que você deve ver. Talvez hajam outros registros de DNS presentes, você pode deletá-los se quiser para deixar tudo mais limpo e organizado, eles não são necessários.</p>
 		<figure>
 			<a href="../img/dns-record.png"><img src="../img/dns-record.png" alt="Página de configuração de um domínio, aberta na seção 'DNS/Nameservers'" width=750></a>
 		</figure>
-		<p>Em seguida, em outra aba, selecione a VPS que quer usar, clique em Gerenciar -&gt; Configurações -&gt; Endereço do IP.</p>
+		<p>Em seguida, na Vultr, selecione a VPS que quer usar. Você deve ver as opções "IP Address" e "IPv6 Address". Esses são os valores que vamos usar.</p>
 		<figure>
-			<a href="../img/ip.png"><img src="../img/ip.png" alt="Página de configuração de uma VPS, aberta na seção 'Endereço de IP'" width=750></a>
+			<a href="../img/ip.png"><img src="../img/ip.png" alt="Página de detalhes de uma VPS, mostando os endereços de IP"></a>
 		</figure>
 		<p>Copie o endereço IPv4. Na página de DNS, adicione dois registros do tipo A, que apontam para o IP que você copiou, cujos nomes são "seudominio.com" e "*". A sua tela deve mostrar algo assim.</p>
 		<figure>
