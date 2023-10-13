@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="pt">
+	<head>
+		<title></title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="style.css">
+		<link rel="icon" type="image/png" href="img/icon.png">
+	</head>
+
+	<body>
+		<h1><u>Simple Machines Forum</u></h1>
+		<p><a href="https://www.simplemachines.org/">Simple Machines Forum</a> (SMF) é um software de fórum leve e poderoso. É uma boa escolha para hospedar discussões e organizar sua comunidade sem depender de plataformas como Reddit ou Discord.</p>
+
+		<h2><u>Dependências</u></h2>
+		<p>Entre em seu servidor e instale as dependências:</p>
+
+		<pre><code class="codeblock">apt install mariadb-server php php-fpm php-gd php-mbstring php-mysql wget</code></pre>
+
+		<p>Agora, vamos criar um banco de dados. Rode o comando abaixo e digite sua senha que você escolheu para o usuário root do banco de dados, ou simplesmente pressione Enter se não configurou nenhuma senha.</p>
+
+		<pre><code class="codeblock">mysql -u root -p</code></pre>
+
+		<p>Em seguida, crie o banco de dados com os seguintes comandos. Altere '<u><em>senha</em></u>' para uma senha de sua escolha e anote-a, pois ela será necessária mais tarde.</p>
+		<pre><code class="codeblock">CREATE DATABASE smf;
+GRANT ALL ON smf.* TO 'smf'@'localhost' IDENTIFIED BY '<u><em>senha</em></u>';
+FLUSH PRIVILEGES;
+EXIT;</code></pre>
+
+		<h2><u>Instalação</u></h2>
+		<p>Agora, vamos instalar o software em si. Vamos baixar o arquivo zipado com <code>wget</code>, criar uma pasta para armazená-lo com <code>mkdir</code>, extraí-lo com <code>tar</code>, remover o arquivo zipado usando <code>rm</code>, e configurar as devidas permissões para que o nginx consiga acessá-lo com <code>chown</code>.</p>
+
+		<pre><code class="codeblock">wget -O smf-latest.tar.gz http://www.simplemachines.org/download/index.php/latest/install/
+mkdir -pv /var/www/smf
+tar -xzf smf-latest.tar.gz -C /var/www/smf
+rm smf-latest.tar.gz
+chown -R www-data:www-data /var/www/smf</code></pre>
+
+		<h2><u>Configuração Nginx</u></h2>
+<p>Vamos configurar o nginx para servir nosso fórum. Crie o seguinte arquivo, alterando <u><em>forum.exemplo.org</em></u> para o nome que quiser.</p>
+
+		<pre><code class="codeblock">nano /etc/nginx/sites-available/<u><em>forum.exemplo.org</em></u></code></pre>
+
+		<p>Dentro desse arquivo, adicione o seguinte conteúdo, substituindo <u><em>forum.exemplo.org</em></u> com o domínio ou subdomínio que você deseja usar para seu fórum. Preste também atenção na linha <code>client_max_body_size</code>, ela determina o quão grandes poderão ser os arquivos que serão enviados pelos usuários do seu fórum. Eu estou configurando um valor de 10 megabytes aqui, mas você pode escolher o que quiser.</p>
+		<p>Também será necessário mudar <code>post_max_size</code> e <code>upload_max_filesize</code> nas configurações do php para alterar o tamanho de uploads permitidos. Faremos isso logo abaixo.</p>
+
+		<pre><code class="codeblock">server {
+        listen 80;
+        listen [::]:80;
+	server_name <u><em>forum.exemplo.org</em></u>;
+        root /var/www/smf;
+        index index.php;
+        # lembre-se de mudar 'post_max_size' e 'upload_max_filesize' 
+	# em /etc/php/8.2/fpm/php.ini
+        client_max_body_size 10M;
+        
+        location / {
+                try_files $uri $uri/ =404;
+        }
+
+        location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+                fastcgi_pass unix:/run/php/php-fpm.sock;
+        }
+}</code></pre>
+
+		<p>Salve e feche o arquivo. Agora, abra o arquivo <code>/etc/php/8.2/fpm/php.ini</code>.</p>
+
+		<pre><code class="codeblock">nano /etc/php/8.2/fpm/php.ini</code></pre>
+
+		<p>Procure as seguintes linhas e as mude para o valor escolhido em <code>client_max_body_size</code> acima.</p>
+
+		<pre><code class="codeblock">post_max_size = 10M
+upload_max_filesize = 10M</code></pre>
+
+		<p>A <a href="https://wiki.simplemachines.org/smf/SMF2.1:Requirements_and_recommendations">documentação</a> também recomenda mudar a linha <code>memory_limit</code> nesse mesmo arquivo para 512M, para melhorar a performance. Sugiro usar esse valor em <code>memory_limit</code> caso seu servidor tenha memória o suficiente para não interferir na sua performance e torná-lo lento. Mas isso é opcional, o fórum ainda vai funcionar caso você não altere esse valor.</p>
+
+		<pre><code class="codeblock">memory_limit = 512M</code></pre>
+
+		<p>Habilite o site e reinicie o nginx e php para as mudanças surtirem efeito. Lembre-se de mudar <u><em>forum.exemplo.org</em></u> para o nome do arquivo que você criou.</p>
+
+		<pre><code class="codeblock">ln -s /etc/nginx/sites-available/<u><em>forum.exemplo.org</em></u> /etc/nginx/sites-enabled/
+systemctl restart nginx
+systemctl restart php8.2-fpm</code></pre>
+
+		<p>Finalmente, gere um certificado HTTPS para o subdomínio do seu fórum.</p>
+
+		<pre><code class="codeblock">certbot --nginx</code></pre>
+
+		<h2><u>Finalizando</u></h2>
+		<p>Para finalizar a instalação, acesse <code><u><em>forum.exemplo.org</em></u>/install.php</code>, essa página vai conter os passos finais para instalar o fórum. Se tudo foi feito corretamente até agora, o instalador não irá reportar nenhum erro. Eu vou te guiar por essa página, mas sugiro usar um tradutor para ajudar a entender melhor o que está acontecendo. Não se preocupe, iremos configurar a interface do fórum para português ao final.</p>
+		<p>Clique em "Continue" para prosseguir.</p>
+		<p>O instalador deve pular o passo 2 e ir direto pro 3, "Database Settings". Aqui, na seção onde diz "Username", coloque "smf". Na seção que diz "Password", coloque a senha que criou quando fez o banco de dados. Caso a seção "Database name" contenha algo além de "smf", altere-a para "smf", pois esse foi o nome que escolhemos para nosso banco de dados. Não precisa mexer no resto. Clique em "Continue" ao finalizar.</p>
+		<p>No passo 4, "Forum Settings", onde diz "Forum name", escolha o nome que você gostaria de dar ao seu fórum, esse nome aparecerá no topo do site. Além disso, a seção "Allow stat Collection" vai estar habilitada por padrão, recomendo clicar nela para desabilitar. Essa opção enviará estatísticas mensalmente para os desenvolvedores do SMF, porém eu prefiro sempre evitar dar estatíscas para proteger minha privacidade. Afinal, mesmo que as pessoas recebendo essas estatísticas sejam confiáveis, nunca se sabe quando pode haver um vazamento de dados, então prefiro evitar dar informações sempre que possível. De qualquer forma, você pode alterar essa opção nas configurações do fórum depois. Clique em "Continue" para prosseguir.</p>
+		<p>O passo 5, "Database Population" deve ocorrer automaticamente, basta clicar em "Continue" quando ele acabar.</p>
+		<p>No passo 6, "Admin account", vamos criar uma conta de administrador. Onde diz "Your username", escolha um nome pro admin. Em "Password", escreva uma senha na primeira opção e repita-a na segunda opção. Nas opções "Administrator email address", bote seu email. Em "Webmaster email address", pode botar qualquer email que desejar. Como esse guia não cobriu configuração de um servidor de email, o fórum não será capaz de usar essa funcionalidade para para enviar emails, mas ainda funcionará normalmente, então não importa o que você botar aqui. Você pode alterar ambos esses emails no futuro caso queira. Clique em "Continue" para prosseguir.</p>
+		<p>No passo 7, "Finalize install", basta clicar na opção que diz "Click here to delete this install.php file now." para deletar o arquivo <code>install.php</code>, impedindo que seu fórum seja configurado por outra pessoa usando esse instalador sem que você fique sabendo. Daí, acesse <code><u><em>forum.exemplo.org</em></u>/index.php</code> para acessar seu fórum pronto!</p>
+		<p>Como últimos toques, vamos configurar apenas 2 coisas a mais. Clique em Admin -&gt; Features and Options, e digite sua senha se for necessário. Na seção "General", onde diz "Source for the jQuery Library", selecione "Local" e clique em "Save" no final da página, para não depender de servidores de terceiros para carregar a biblioteca jQuery. Então no menu que diz "Configuration", que está entre "Main" e "Forum", selectione Languages -&gt; Add Language. Pesquise por "br", isso deverá encontrar um pacote de linguagem chamado "Portuguese_brazilian", clique em "Install", e novamente clique em "Install" após ver a tela listando todos os arquivos que serão baixados. Após finalizado, vá em "Edit Languages", selecione "Portuguese Brazilian", e clique "Save". Seu fórum agora está em português! Divirta-se com seu fórum!</p>
+		<footer>
+			<hr>
+			<a href="index.html">De volta ao início</a>
+		</footer>
+	</body>
+</html>
