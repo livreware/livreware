@@ -2,6 +2,8 @@
 
 Um site dedicado a fornecer tutoriais em português ensinando como se ter um próprio site e instalar serviços de software livre. Inspirado por [LandChad.net](https://landchad.net/) ([GitHub](https://github.com/lukesmithxyz/landchad)).
 
+Além disso, o site também busca ser [otimizado para qualquer navegador](https://anybrowser.org/campaign/anybrowser_br.html). Caso ele não funcione direito no seu navegador, ou você tenha alguma sugestão para melhorar a acessibilidade, pro favor me diga.
+
 Sugestões, correções, ou qualquer outra ajuda é bem-vinda! Você pode adicionar um link ao final da página do artigo como crédito de autoria por sua colaboração.
 
 ## Regras de envios
