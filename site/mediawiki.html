@@ -21,12 +21,12 @@ apt install imagemagick mariadb-server php php-apcu php-cli php-curl php-fpm php
 
 		<p>Agora, vamos baixar o MediaWiki.</p>
 		
-		<pre><code class="codeblock">wget https://releases.wikimedia.org/mediawiki/1.39/mediawiki-1.39.3.tar.gz</code></pre>
+		<pre><code class="codeblock">wget https://releases.wikimedia.org/mediawiki/1.41/mediawiki-1.41.0.tar.gz</code></pre>
 
 		<p>Vamos extrair o arquivo usando <code>tar</code>, renomear a pasta extraída com <code>mv</code> e configurar suas devidas permissões com <code>chown</code>.</p>
 
-		<pre><code class="codeblock">tar -xzf mediawiki-1.39.3.tar.gz -C /var/www/
-mv /var/www/mediawiki-1.39.3 /var/www/mediawiki
+		<pre><code class="codeblock">tar -xzf mediawiki-1.41.0.tar.gz -C /var/www/
+mv /var/www/mediawiki-1.41.0 /var/www/mediawiki
 chown -R www-data:www-data /var/www/mediawiki/</code></pre>
 
 		<p>Agora vamos criar um banco de dados, utilizando MariaDB/MySQL. Vamos criar um banco de dados chamado <code><em>my_wiki</em></code> e um usuário chamado <code><em>wikiuser</em></code>. Você pode usar os nomes que quiser, mas lembre deles pois serão necessários depois.</p>
