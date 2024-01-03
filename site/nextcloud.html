@@ -21,7 +21,7 @@
 		
 		<pre><code class="codeblock">nano /etc/php/8.2/fpm/pool.d/www.conf</code></pre>
 
-		<p>Busque as seguitnes linhas e faça esses ajustes. Busque as linhas que não contém ";" no começo delas, esse símbolo denomina um cometário no arquivo, e portanto, linhas que começam com ele não serão lidas.</p>
+		<p>Busque as seguitnes linhas e faça esses ajustes. Busque as linhas que não contém ";" no começo delas, esse símbolo denomina um cometário no arquivo, e portanto, linhas que começam com ele não serão lidas. Remova o ";" no começo das segunites linhas e ajuste seus valores para esses.</p>
 
 		<pre><code class="codeblock">pm = dynamic
 pm.max_children = 120
@@ -38,19 +38,19 @@ pm.max_spare_servers = 18</code></pre>
 
 		<pre><code class="codeblock">mysql_secure_installation</code></pre>
 
-		<p>Podemos dizer "Yes" para as seguintes perguntas e inserir uma senha de root. O usuário Root é o usuário Admnistrador, então ecolha uma senha segura pra ele.</p>
+		<p>Podemos dizer "Yes" ou "No" para as seguintes perguntas. Recomendo responder dessa forma. Inicialmente o banco de dados vai pedir a senha do usuário root, caso você tenha acabado de instalar o banco de dados, essa senha estará vazia, então basta apertar Enter para prosseguir. Caso ja tenha configurado essa senha anteriormente, insira-a aqui.</p>
 
-		<pre><code class="codeblock">Enter current password for root (enter for none): # Aperte enter sem escrever nada, caso nao tenha configurado uma senha ainda
+		<pre><code class="codeblock">Enter current password for root (enter for none): (aperte enter ou insira sua senha)
 Switch to unix_socket authentication [Y/n]: Y
-Change the root password? [Y/n]: Y	# Insira uma senha.
+Change the root password? [Y/n]: n
 Remove anonymous users? [Y/n]: Y
 Disallow root login remotely? [Y/n]: Y
 Remove test database and access to it? [Y/n]: Y
 Reload privilege tables now? [Y/n]: Y</code></pre>
 
-		<p>Em seguida, entre no banco de dados SQL com a senha nova e segura que você escolheu. Execute o seguinte comando:</p>
+		<p>Em seguida, entre no banco de dados SQL. Execute o seguinte comando:</p>
 
-		<pre><code class="codeblock">mysql -u root -p</code></pre>
+		<pre><code class="codeblock">mysql -u root</code></pre>
 
 		<p>Nós precisamos criar um banco de dados para o Nextcloud. Siga as instruções abaixo e mude <u><em>nome-usuario</em></u> e <u><em>senha</em></u> como desejar. <strong>Anote esses valores pois eles serão importantes mais pra frente</strong>, você precisará escrevê-los de novo.</p>
 
