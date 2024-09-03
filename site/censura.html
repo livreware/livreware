@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+	<head>
+		<title>Acessando websites censurados ou bloqueados</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="style.css">
+		<link rel="icon" type="image/png" href="img/icon.png">
+	</head>
+
+	<body>
+		<h1><u>Acessando websites censurados ou bloqueados</u></h1>
+		<p>Censura de websites está se tornando algo cada vez mais comum ao redor do mundo, até mesmo em países chamados de democráticos. Este guia irá mostrar como usar a <a href="https://www.torproject.org/pt-BR/">Rede Tor</a> para contornar tal censura.</p>
+
+		<h2><u>Riscos</u></h2>
+		<p>Apesar do uso do Tor não ser ilegal por si só, é possível que algum juiz simplesmente decida tornar o seu uso um crime, a qualquer momento. Pesquise a respeito das suas leis locais ou decisões judiciais recentes a respeito do uso do Tor para ter certeza.</p>
+		<p>Alguns sites não gostam que você use o Tor, eles acreditam que você seja um bot. Veja <a href="https://support.torproject.org/pt-BR/tbb/website-blocking-tor/">isso</a>, <a href="https://support.torproject.org/pt-BR/tbb/tbb-30/">isso</a> e <a href="https://support.torproject.org/pt-BR/tbb/tbb-45/">isso</a>. Você vai provavelmente encontrar CAPTCHAs e outros incômodos com maior frequência, como receber um email pedindo para você confirmar um login novo, e pode até ter sua conta suspensa em algum site no qual você fizer login, caso o faça via Tor. Tenha em mente que isso pode acontecer com você. Caso aconteça, contate o suporte do site e explique a situação para que eles resolvam.</p>
+
+		<h2><u>A Rede Tor</u></h2>
+		<p>A Rede Tor é, em resumo, uma rede de voluntários que operam servidores para ajudar à combater a censura na internet. Quando você se conecta à Rede Tor, seu computador se conecta à 3 servidores (chamados de "nós" ou "nodes" ou "relays") escolhidos aleatoriamente, para daí então se conectar ao site que você deseja. Isso esconde seu endereço de IP, muito semelhante à uma VPN, e te permite acessar sites normalmente bloqueados em seu país ou sua rede. Caso queira mais detalhes técnicos sobre a Rede Tor, leia <a href="https://tb-manual.torproject.org/pt-BR/about/">o manual</a> e as <a href="https://support.torproject.org/pt-BR/faq/">perguntas frequentes</a>.</p>
+		<p>Devido à forma como o Tor funciona, direcionando sua conexão para 3 servidores diferentes antes de levá-la ao seu destino, ele é mais lento que sua conexão normal, fora do Tor. Tenha paciência com essa maior demora, é melhor ter um acesso lento que nenhum acesso.</p>
+		<p>O Tor também te permite acessar links .onion. Esses links são acessíveis somente pela Rede Tor, pois eles utilizam desses mesmos servidores operados por voluntários para esconder o endereço IP do site de destino. Isso oculta a localização real do site, e torna-o muito mais resiliente à censura. Por exemplo, <a href="http://2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion">esta</a> é a versão .onion do site do Projeto Tor.</p>
+		<p>Caso um site tenha uma versão .onion, o link normalmente estará listado na página do site, ou você verá um botão roxo escrito ".onion disponível" na barra de navegação do Navegador Tor.</p>
+		<figure>
+			<a href=img/onion.png><img src="img/onion.png" alt="Demonstração do botão &quot;.onion disponível&quot;"/></a>
+			<figcaption><em>Clique na imagem para aumentar</em></figcaption>
+		</figure>
+		<p>Caso você queira espelhar seu website na Rede Tor, veja <a href="tor.html">esse guia</a>.</p>
+
+		<h2><u>Usando o Tor no seu computador</u></h2>
+		<p><a href="https://www.torproject.org/pt-BR/download/">Baixe o Navegador Tor</a> e instale-o. Ao iniciá-lo, ele deve automaticamente se conectar à rede em alguns segundos. Assim que a conexão terminar, visite o site que desejar e veja se agora consegue acessá-lo.</p>
+		<p>Caso o site do Projeto Tor esteja bloqueado, ou você não esteja conseguindo baixar o Navegador, leia as <a href="https://support.torproject.org/pt-BR/censorship/gettor-1/">formas alternativas</a> de obtê-lo (<a href="https://web.archive.org/web/20240902132536/https://support.torproject.org/pt-BR/censorship/gettor-1/">Versão arquivada desse link</a>).</p>
+		<p>Caso você tenha baixado o Navegador, mas não esteja conseguindo se conectar, tente usar uma <a href="https://support.torproject.org/pt-BR/censorship/censorship-7/">Ponte</a>. Alguns governos/empresas bloqueiam os servidores do Tor, Pontes são uma forma de tentar burlar esses bloqueios. Veja como usar pontes <a href="https://tb-manual.torproject.org/pt-PT/circumvention/">aqui</a> (<a href="https://web.archive.org/web/20240902132657/https://tb-manual.torproject.org/pt-PT/circumvention/">Versão arquivada desse link</a>).</p>
+
+		<h2><u>Usando o Tor no seu celular</u></h2>
+		<p>Para acessar o Tor no celular, podemos usar o <a href="https://support.torproject.org/pt-BR/glossary/orbot/">Orbot</a> ou o <a href="https://www.torproject.org/pt-BR/download/#android">Navegador Tor Mobile</a>.</p>
+		<p>A Rede Tor não é uma VPN, mas o Orbot faz ela agir como se fosse. Baixe-o para <a href="https://play.google.com/store/apps/details?id=org.torproject.android">Android</a> ou <a href="https://apps.apple.com/us/app/orbot/id1609461599">IOS</a>. Ao iniciá-lo, ele deve criar uma conexão VPN. Daí, basta acessar o site ou aplicativo que quiser pelo seu celular.</p>
+		<p>O Orbot deve funcionar, mas caso não funcione, você também pode tentar o <a href="https://www.torproject.org/pt-BR/download/#android">Navegador Tor Mobile para Android</a> ou o <a href="https://apps.apple.com/us/app/onion-browser/id519296448">OnionBrowser para IOS</a>. Então, acesse o site que deseja por esses navegadores, faça seu login caso seja necessário, e torça para que tudo dê certo.</p>
+		<p>Pontes também podem ser utilizadas nesses programas, caso você esteja com problemas de conexão. No Orbot, aperte "Escolha como se conectar" e selecione uma Ponte. No Navegador Tor Mobile, aperte "Configure a conexão" e em seguida "Configurar Ponte". No Onion Browser, vá em "Iniciar built-in Tor" e "Configurar pontes".</p>
+
+		<h2><u>Por que não usar uma VPN?</u></h2>
+		<p>A Rede Tor se comporta de forma semelhante à uma VPN: você se conecta a um servidor de outra pessoa antes de se conectar ao seu site de destino, fazendo com que a sua conexão tenha o IP desse servidor. Porém, enquanto que VPNs são normalmente operadas por empresas e requerem apenas uma conexão intermediária para funcionar, a Rede Tor é operada por voluntários, e requer três conexões para garantir sua privacidade. A Rede Tor também possui certas formas de evitar censura, como Pontes, que normalmente não há equivalentes em serviços de VPN.</p>
+		<p>Empresas de VPNs, gratuitas ou pagas, <a href="https://www.pcmag.com/news/nordvpn-actually-we-do-comply-with-law-enforcement-data-requests">tem a capacidade de armazenar seus dados e entregá-los ao policiais</a>. Elas são obrigadas por lei à fazer isso. A Rede Tor, por design, dificulta muito mais essa coleta de informações. Ela <a href="https://support.torproject.org/pt-BR/faq/staying-anonymous/">não te torna 100% seguro ou anônimo</a>, nenhum software é capaz de fazer isso, mas ela possui proteções muito melhores que VPNs.</p>
+		<p>VPNs funcionam sim para contornar censura, mas é de extrema importância pesquisar bem a respeito da VPN que você deseja usar. Eu acredito que a <a href="https://protonvpn.com/pt-br">ProtonVPN</a> e <a href="https://mullvad.net/pt">Mullvad</a> são boas escolhas, mas faça sua pesquisa assim mesmo, pois eu posso estar errado ou não ter conhecimento de algo importante.</p>
+		<footer>
+			<hr>
+			<a href="index.html">De volta ao início</a>
+		</footer>
+	</body>
+</html>
+
