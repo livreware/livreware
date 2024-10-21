@@ -73,7 +73,7 @@ EXIT;</code></pre>
 
 		<pre><code class="codeblock">upstream php-handler {
     server 127.0.0.1:9000;
-    server unix:/run/php/php-fpm.sock;
+    #server unix:/run/php/php8.2-fpm.sock;
 }
 
 # Set the `immutable` cache control options only for assets with a cache busting `v` argument
@@ -251,7 +251,7 @@ server {
         access_log off;     # Optional: Don't log access to assets
     }
 
-    location ~ \.woff2?$ {
+    location ~ \.(otf|woff2?)$ {
         try_files $uri /index.php$request_uri;
         expires 7d;         # Cache-Control policy borrowed from `.htaccess`
         access_log off;     # Optional: Don't log access to assets
