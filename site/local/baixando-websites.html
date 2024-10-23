@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+	<head>
+		<title>Baixando páginas e websites da Internet</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="../style.css">
+		<link rel="icon" type="image/png" href="../img/icon.png">
+	</head>
+
+	<body>
+		<h1><u>Baixando páginas e websites da Internet</u></h1>
+		<p>As vezes eu gosto de baixar uma página online para poder ler offline, ou para arquivá-la no meu computador caso o site original saia do ar. Nesse guia, vou lhe mostrar algumas formas de fazer isso.</p>
+
+		<h2><u>Baixando uma página individual</u></h2>
+		<h3><u>No Desktop</u></h3>
+		<p>Tanto o <a href="https://www.mozilla.org/firefox">Firefox</a> como o Chrome possuem funções para baixar uma página em PDF. Caso você já tenha um desses dois instalados, não precisa instalar nada a mais. Recomendo instalar o Firefox, caso não tenha nenhum dos dois instalados, ou algum navegador baseado neles. Em navegadores baseados no Firefox ou Chrome, as instruições serão semelhantes.</p>
+		<p>No Firefox, abra a página que deseja salvar, clique no menu de três listras no canto superior direito do navegador, e em &quot;Imprimir&quot;, ou utilize o atalho Control + P. Onde diz &quot;Destino&quot;, selecione &quot;Salvar como PDF&quot;, e clique em &quot;Salvar&quot;. Caso queira salvar a página como um HTML, clique em &quot;Salvar página como&quot; ao invés de &quot;Imprimir&quot; no menu, ou utilize o atalho Control + S.</p>
+		<p>No Chrome, abra a página que deseja salvar, clique no menu de três pontos no canto superior direito do navegador, e em &quot;Imprimir&quot;, ou utilize o atalho Control + P, o mesmo do Firefox. Onde diz &quot;Destino&quot;, selecione &quot;Salvar como PDF&quot;, e clique em &quot;Salvar&quot;. Caso queira salvar a página como um HTML, clique em &quot;Transmitir, salvar e compartilhar&quot; ao invés de &quot;Imprimir&quot; no menu, e então &quot;Salvar página como&quot;, ou utilize o atalho Control + S.</p>
+
+		<h3><u>No Celular</u></h3>
+		<p>Podemos usar o <a href="https://www.mozilla.org/firefox">Firefox Mobile</a> para baixar páginas em PDF. Não conheço uma forma de fazer o mesmo pelo Chrome.</p>
+		<p>O processo no celular é semelhante ao desktop. Abra a página que deseja salvar, clique no menu de três pontos no canto inferior direito do navegador, e em &quot;Imprimir&quot;. A tela que aparecer em seguida vai variar um pouco dependendo do seu celular, mas na opção que diz algo semelhante à &quot;Selecionar Impressora&quot;, selecione &quot;Salvar como PDF&quot;, e aperte o respectivo botão de salvar em seu celular.</p>
+
+		<h2><u>Baixando um site completo</u></h2>
+		<p>Também é possível baixar um site inteiro. Para fazer isso, podemos usar ferramentas como <a href="https://httrack.com">HTTrack</a> e <a href="https://www.gnu.org/software/wget">Wget</a>.</p>
+		<div class="importante">
+			<p><strong><u>Atenção:</u></strong> Baixar um site por completo irá consumir bastante tráfego de internet, tanto seu como do provedor do site, e pode demorar bastante. Tráfego não é de graça, boa parte dos provedores de VPS tem um limite em quanto tráfego um servidor pode receber, e cobram a mais caso esse limite seja excedido. Além disso, baixar um site por inteiro pode consumir boa parte da banda larga do site, tornado-o mais lento para seus usuários.</p>
+			<p>Portanto somente baixe um site por completo caso seja necessário, e siga as recomendações abaixo para não abusar do processamento ou banda larga do site que você está baixando.</p>
+		</div>
+
+		<h3><u>HTTrack</u></h3>
+		<p><a href="https://httrack.com">HTTrack</a> é uma ferramenta gráfica para baixar websites. <a href="https://www.httrack.com/page/2/">Baixe-a</a> e abra o programa. Caso ele não esteja em português, em &quot;Language Preference&quot;, selecione &quot;Portugues-Brasil&quot;. Clique em &quot;Próximo&quot;.</p>
+		<p>Escolha um nome de novo projeto, algo para identificar o site que está baixando. O nome do site é uma boa escolha. O &quot;caminho base&quot; é o local onde os arquivos serão salvos, escolha de acordo com sua preferência. Você também pode escolher/criar uma categoria do projeto, mas isso não é necessário.</p>
+		<p>Em &quot;Ação&quot;, a opção &quot;Copiar site(s) da Web&quot; deve estar selecionada, e provavelmente vai ser o que você quer. Clique em &quot;Adicionar URL&quot; para adicionar o site que deseja, removendo a parte &quot;https://&quot; ou &quot;http://&quot; do link. Você também pode simplesmente colar o link do site na caixa abaixo desta opção. Não é necessário mudar nada em &quot;Parâmetros e opções de cópia de site&quot;, o padrão deve funcionar, mas talvez algumas opções lhe interessem quando estiver mais acostumado com essa ferramenta. Então, basta apertar &quot;Próximo&quot; e depois em &quot;Iniciar&quot; para começar a baixar o site.</p>
+		<p>Após o download terminar, você pode clicar em &quot;Explorar cópia do site&quot; para ver o site baixado, ou abrir a pasta que você selecionou para salvar os arquivos e abrir o &quot;index.html&quot; para ver uma lista dos sites baixados.</p>
+		<p>Você também pode, a qualquer momento, clicar em &quot;Clique para obter ajuda&quot; no canto superior direito do programa para ver instruções mais detalhadas de uso.</p>
+
+		<h3><u>Wget</u></h3>
+		<p><a href="https://www.gnu.org/software/wget">Wget</a> é uma ferramenta de linha de comando para baixar informações de websites, e algumas outras coisas. Também é minha favorita, pessoalmente. Seu <a href="https://www.gnu.org/software/wget/manual">manual</a> é bem extenso, e recomendo sua leitura caso queira entender melhor as opções abaixo ou utilizar todo o potencial dessa ferramenta. Porém irei ressaltar somente as opções relevantes para baixar um site por completo aqui.</p>
+		<p>Como ela é utilizada por meio de linha de comando, recomendo ter alguma proficiência com o terminal, ou vontade de aprender, para utilizá-la. Em Linux, você pode baixá-lo pelos repositórios da sua distro. Em MacOS, pode ser instalada via Homebrew. Em Windows, pode ser instalada por meio de Cygwin, Windows Subsystem for Linux, ou por meio de algum port feito para Windows. Como utilizar essas formas de instalação está além do escopo desse guia &ndash; em outras palavras, eu to com preguiça de explicar.</p>
+		<p>Para baixar um website por completo, utilize o seguinte comando. Substituia <code><em><u>https://exemplo.org</u></em></code> pelo site que deseja baixar.</p>
+		<pre><code class="codeblock">wget -m -k -E --wait 2 --random-wait --user-agent=&quot;&quot; -e robots=off <em><u>https://exemplo.org</u></em></code></pre>
+
+		<p>Explicação desse comando:</p>
+		<ul>
+		<li><code>-m</code> é a opção &quot;mirror&quot;, ela habilita opções para baixar um site por completo, como recursão infinita.</li>
+		<li><code>-k</code> converte os links do site para que sejam abertos localmente.</li>
+		<li><code>-E</code> converte páginas do site para arquivos .html para que sejam abertas por um navegador normal</li>
+		<li><code>--wait 2</code> define que sejam esperados 2 segundos entre cada conexão. Isso é para evitar sobrecarregar o processador e a banda larga do site, assim como evitar que você seja impedido de continuar baixando devido à utilizar recursos demais do servidor do site.</li>
+		<li><code>--random-wait</code> define uma espera aleatória entre 0.5 e 1.5 multiplicado pelos segundos definidos em <code>--wait</code> entre cada conexão. Isso é para evitar que sites que analizam o uso de ferramentas como Wget de bloquear tais conexões. Não é essencial, mas é bom ter caso o site esteja utilizando essa análise, já que não é possível saber se este é o caso sem ter acesso ao servidor do site.</li>
+		<li><code>--user-agent=&quot;&quot;</code> define o seu <a href="https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers/User-Agent">User Agent</a> para um valor vazio. Isso é para evitar ser afetado por sites que bloqueiam o User Agent padrão do Wget. Você pode botar alguma outra coisa também entre as aspas caso acredite que isso vai lhe dar melhores chances de não ser bloqueado por um site que faz bloqueio de User Agents.</li>
+		<li><code>-e robots=off</code> ignora o arquivo <a href="https://pt.wikipedia.org/wiki/Protocolo_de_exclus%C3%A3o_de_rob%C3%B4s">robots.txt</a>. Esse arquivo é utilizado para dizer aos indexadores de ferramentas de busca, como os bots do Google e Bing, a não indexarem certas partes de um site. Por padrão, o Wget respeita esse arquivo. Porém, quando se está baixando um site por completo, você provavelmente vai querer não se limitar às definições desse arquivo.</li>
+		</ul>
+		<p>Para baixar esse site, você faria:</p>
+
+		<pre><code class="codeblock">wget -m -k -E --wait 2 --random-wait --user-agent=&quot;&quot; -e robots=off https://livreware.org</code></pre>
+
+		<p>O comando acima funciona para sites que hospedem todo seu conteúdo no mesmo domínio, como é o caso aqui. Porém é comum que alguns sites hospedem suas imagens/vídeos em outros domínios, e o Wget por padrão não baixa conteúdos além do domínio que você especificou. Por exemplo, o site exemplo.org pode hospedar suas imagens em imagens.net.</p>
+		<p>Para conseguir devidamente baixar de sites que hospedam parte de seu conteúdo em outros lugares, podemos usar as seguintes opções. Veja também <a href="https://www.gnu.org/software/wget/manual/html_node/Spanning-Hosts.html">essa seção do manual</a>.</p>
+		<ul>
+		<li><code>-H</code> habilita baixar de outros domínios. Por padrão, isso vai fazer o Wget baixar de qualquer domínio que achar na página. Isso vai fazer ele baixar outras páginas de outros sites, não só imagens. Como esses sites provavelmente também vão linkar para outros sites, seu download vai crescer muito rápido e baixar coisas que você não quer. Somente use essa opção em conjunto com a opção <code>-D</code> abaixo para limitar de quais sites você baixa.</li>
+		<li><code>-D<em><u>dominio1.com</u></em>,<em><u>dominio2.net</u></em>,...</code> especifica a lista de domínios dos quais você gostaria de baixar conteúdos. Sempre use-a em conjunto com <code>-H</code>. A lista de domínios precisa vir logo depois do -D, sem espaço, e com vírgula separando os domínios.</li>
+		</ul>
+		<p>Identificar se uma página contém conteúdo externo, e de quais domínios está puxando esse conteúdo, talvez requira um pouco de experimentação.</p>
+		<p>Você pode tentar ver o HTML da página/site dentro do seu navegador, e buscar os links das imagens. Também pode apertar F12 e ir na aba &quot;Rede&quot; ou &quot;Network&quot;, recarregar a pagina e tentar observar quais domínios de terceiros aparacem nos registros, e então adicioná-los ao comando para baixar o site.</p>
+		<p>Wget é uma ferramenta poderosa, mas precisa de um tempo para ser aprendida. Caso você tenha interesse em usar/aprender o terminal, recomendo tomar tempo para aprender o Wget, caso ele seja útil para você. Ele pode fazer várias outras coisas, como <a href="https://www.gnu.org/software/wget/manual/html_node/Advanced-Usage.html">baixar páginas individuais, baixar apenas um tipo específico de arquivo de uma página, como GIFs</a>, ou baixar vários arquivos de uma vez ao especificar multiplos sites no comando, e podendo <a href="https://www.gnu.org/software/wget/manual/html_node/Download-Options.html#index-continue-retrieval">resumir seu download caso haja problemas de conexão</a>. Tudo isso sem precisar de um navegador aberto, podendo ser automatizado em scripts e <a href="https://www.gnu.org/software/wget/manual/html_node/Very-Advanced-Usage.html">cronjobs</a>.</p>
+		<footer>
+			<hr>
+			<a href="../index.html">De volta ao início</a>
+		</footer>
+	</body>
+</html>
+
