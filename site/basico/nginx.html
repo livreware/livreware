@@ -37,7 +37,7 @@ systemctl disable apache2
 apt remove apache2 apache2-bin apache2-data apache2-doc apache2-utils</code></pre>
 
 		<p>O primeiro e segundo comandos o desabilita, o terceiro desinstala.</p>
-		<h3>Arquivo de configuração Nginx</h3>
+		<h3><u>Arquivo de configuração Nginx</u></h3>
 		<p>Nginx é nosso webserver, ele é o programa que vai pegar seu site e disponibilizá-lo na internet. Você só precisa fazer um pequeno site ou página e dizer ao Nginx onde os arquivos do seu site estão. Isso é simples, então vamos fazer agora.</p>
 		<p>Os arquivos de configuração do <code>nginx</code> estão localizados na pasta (também chamada de “diretório”) <code>/etc/nginx</code>. Dentro dela, as duas pastas principais (em Debian e sistemas semelhantes) são <code>/etc/nginx/sites-available</code> e <code>/etc/nginx/sites-enabled</code>. A ideia é que você pode criar um arquivo de configuração em <code>sites-available</code> e, após ele estar pronto, você pode criar um atalho/link em <code>sites-enabled</code>, para habilitá-lo. Dessa forma, você pode ter sites configurados e pode habilitá-los e desabilitá-los sem precisar apagar o arquivo de configuração.</p>
 		<p>Primeiro, vamos escrever as configurações do nosso site. Você pode copiar e colar os comandos a seguir (com as devidas modificações), mas eu vou explicar o que cada linha significa.</p>
