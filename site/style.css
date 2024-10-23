@@ -28,3 +28,11 @@ pre {
 img {
 	max-width: 100%;
 }
+
+.importante {
+	border-width: 2px;
+	border-style: solid;
+	border-color: red;
+	background-color: #ffdddd;
+	padding: 10px;
+}
